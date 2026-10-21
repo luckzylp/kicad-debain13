@@ -1,0 +1,151 @@
+name: Build Debian package
+
+# Reusable build workflow.  release.yml calls it for tag releases; it can also
+# be dispatched manually to produce a tested candidate artifact without
+# creating a GitHub Release.
+on:
+  workflow_call:
+    inputs:
+      runner:
+        description: github-hosted (Debian 13 container) or self-hosted-vm
+        required: false
+        type: string
+        default: github-hosted
+      scope:
+        description: arch (kicad only) or full (also demos and docs)
+        required: false
+        type: string
+        default: arch
+  workflow_dispatch:
+    inputs:
+      runner:
+        description: Where to build
+        required: true
+        type: choice
+        options:
+          - github-hosted
+          - self-hosted-vm
+        default: github-hosted
+      scope:
+        description: Build scope
+        required: true
+        type: choice
+        options:
+          - arch
+          - full
+        default: arch
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate-input:
+    name: Validate runner selection
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check runner input
+        env:
+          RUNNER_INPUT: ${{ inputs.runner }}
+          SCOPE_INPUT: ${{ inputs.scope }}
+        run: |
+          set -euo pipefail
+          case "$RUNNER_INPUT" in
+            github-hosted|self-hosted-vm) ;;
+            *) echo "invalid runner: $RUNNER_INPUT" >&2; exit 1 ;;
+          esac
+          case "$SCOPE_INPUT" in
+            arch|full) ;;
+            *) echo "invalid scope: $SCOPE_INPUT" >&2; exit 1 ;;
+          esac
+
+  build-container:
+    name: Build in Debian 13 container
+    needs: validate-input
+    if: inputs.runner == 'github-hosted'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    container:
+      image: debian:13@sha256:4c25275446ca371766b8b093c696782eabce06263fccacb8d5d813b3dc44b308
+      options: --user root
+    steps:
+      - name: Bootstrap checkout dependencies
+        shell: bash
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends ca-certificates git zstd
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          clean: true
+          fetch-depth: 0
+      - name: Build and test
+        uses: ./.github/actions/build-deb
+        with:
+          scope: ${{ inputs.scope }}
+
+  build-vm:
+    name: Build on self-hosted Debian 13 VM
+    needs: validate-input
+    if: inputs.runner == 'self-hosted-vm'
+    # The runner must carry these custom labels.  It must be a real Debian 13
+    # amd64 machine with passwordless sudo for apt.  See docs/BUILD.md.
+    runs-on: [self-hosted, debian-13, kicad-builder]
+    timeout-minutes: 350
+    steps:
+      - name: Ensure actions/cache dependency
+        shell: bash
+        run: |
+          if ! command -v zstd >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y --no-install-recommends zstd
+          fi
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          clean: true
+          fetch-depth: 0
+      - name: Build and test
+        uses: ./.github/actions/build-deb
+        with:
+          scope: ${{ inputs.scope }}
+
+  smoke-test:
+    name: Clean Debian 13 install smoke test
+    needs: [build-container, build-vm]
+    if: >-
+      always() && !cancelled() &&
+      (needs.build-container.result == 'success' || needs.build-vm.result == 'success')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    container:
+      image: debian:13@sha256:4c25275446ca371766b8b093c696782eabce06263fccacb8d5d813b3dc44b308
+      options: --user root
+    steps:
+      - name: Bootstrap checkout dependencies
+        shell: bash
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends ca-certificates git zstd
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          clean: true
+      - name: Download tested artifact
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: kicad-debian13-amd64
+          path: dist
+      - name: Install and exercise package in a fresh container
+        run: ./tests/package-smoke-test.sh
+      - name: Upload smoke-test report
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: kicad-debian13-smoke-test
+          path: build/reports/smoke-test.txt
+          if-no-files-found: error
+          retention-days: 14

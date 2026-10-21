@@ -1,0 +1,192 @@
+From: Carsten Schoenert <c.schoenert@t-online.de>
+Date: Wed, 5 Jun 2024 18:27:22 +0200
+Subject: demos: Adjust MIME encoding to UTF8 of some libraries
+
+The used strings in the text files did get checked against current
+available license and text files from STM.
+---
+ demos/simulation/gain_control/vca810.lib           |  2 +-
+ .../ST_SILICON_CARBIDE_SCHOTTKY_V9.LIB             | 38 +++++++++++-----------
+ 2 files changed, 20 insertions(+), 20 deletions(-)
+
+diff --git a/demos/simulation/gain_control/vca810.lib b/demos/simulation/gain_control/vca810.lib
+index e2b907b..8a7ff22 100644
+--- a/demos/simulation/gain_control/vca810.lib
++++ b/demos/simulation/gain_control/vca810.lib
+@@ -18,7 +18,7 @@
+ * Simulator Version: 9.3.80.256 SF-TI
+ * EVM Order Number: N/A 
+ * EVM Users Guide: N/A
+-* Datasheet: SBOS275F ñJUNE 2003ñREVISED DECEMBER 2010
++* Datasheet: SBOS275F JUNE 2003 REVISED DECEMBER 2010
+ *
+ * Model Version: 1.0
+ *
+diff --git a/demos/simulation/power_supplies/hv_converter/ST_SILICON_CARBIDE_SCHOTTKY_V9.LIB b/demos/simulation/power_supplies/hv_converter/ST_SILICON_CARBIDE_SCHOTTKY_V9.LIB
+index dc54e29..dfc399d 100644
+--- a/demos/simulation/power_supplies/hv_converter/ST_SILICON_CARBIDE_SCHOTTKY_V9.LIB
++++ b/demos/simulation/power_supplies/hv_converter/ST_SILICON_CARBIDE_SCHOTTKY_V9.LIB
+@@ -5,10 +5,10 @@
+ **********************************************************************
+ *Please Read Carefully:
+ *Information in this document is provided solely in connection with ST products.
+-*STMicroelectronics NV and its subsidiaries (ìSTî) reserve the right to make :
++*STMicroelectronics NV and its subsidiaries (‚ÄúST‚Äù) reserve the right to make :
+ *changes, corrections, modifications or improvements, to this document,
+ *and the products and services described herein at any time, without notice.
+-*All ST products are sold pursuant to STís terms and conditions of sale.
++*All ST products are sold pursuant to  ST‚Äôs terms and conditions of sale.
+ *Purchasers are solely responsible for the choice, selection and use of the ST products, and services described herein,
+ *and ST assumes no liability whatsoever relating to the choice, selection or use of the ST products and services described herein.
+ *No license, express or implied, by estoppel or otherwise, to any intellectual property rights is granted under this document.
+@@ -17,7 +17,7 @@
+ *services, or any intellectual property contained therein or
+ *considered as a warranty covering the use in any manner whatsoever of such third party products or
+ *services or any intellectual property contained therein.
+-*UNLESS OTHERWISE SET FORTH IN STíS TERMS AND CONDITIONS OF SALE ST DISCLAIMS ANY EXPRESS OR IMPLIED
++*UNLESS OTHERWISE SET FORTH IN ST‚ÄôS TERMS AND CONDITIONS OF SALE ST DISCLAIMS ANY EXPRESS OR IMPLIED
+ *WARRANTY WITH RESPECT TO THE USE AND/OR SALE OF ST PRODUCTS INCLUDING WITHOUT LIMITATION IMPLIED
+ *WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE (AND THEIR EQUIVALENTS UNDER THE LAWS
+ *OF ANY JURISDICTION), OR INFRINGEMENT OF ANY PATENT, COPYRIGHT OR OTHER INTELLECTUAL PROPERTY RIGHT.
+@@ -25,7 +25,7 @@
+ *RECOMMENDED, AUTHORIZED OR WARRANTED FOR USE IN MILITARY, AIR CRAFT, SPACE, LIFE SAVING, OR LIFE SUSTAINING
+ *APPLICATIONS, NOR IN PRODUCTS OR SYSTEMS WHERE FAILURE OR MALFUNCTION MAY RESULT IN PERSONAL INJURY,
+ *DEATH, OR SEVERE PROPERTY OR ENVIRONMENTAL DAMAGE. ST PRODUCTS WHICH ARE NOT SPECIFIED AS "AUTOMOTIVE
+-*GRADE" MAY ONLY BE USED IN AUTOMOTIVE APPLICATIONS AT USERíS OWN RISK.
++*GRADE" MAY ONLY BE USED IN AUTOMOTIVE APPLICATIONS AT USER‚ÄôS OWN RISK.
+ *Resale of ST products with provisions different from the statements and/or technical features
+ *set forth in this document shall immediately void any warranty granted by ST for the ST product or
+ *service described herein and shall not create or extend in any manner whatsoever, any liability of ST.
+@@ -34,7 +34,7 @@
+ *The ST logo is a registered trademark of STMicroelectronics.
+ *All other names are the property of their respective owners.
+ *
+-*© 2006 STMicroelectronics - All rights reserved
++*¬© 2006 STMicroelectronics - All rights reserved
+ *
+ *STMicroelectronics group of companies
+ *Australia - Belgium - Brazil - Canada - China - Czech Republic - Finland - France
+@@ -94,7 +94,7 @@
+ *******************************************************************
+ * Model name       : STPSC606G-TR
+ * Description      : Power Schottky SiC rectifier
+-* Package type     : D≤PAK
++* Package type     : D2PAK
+ *******************************************************************
+ .MODEL STPSC606G-TR D
+ + IS=548.81E-18 N=.99749 RS=78.375E-3 IKF=996.79 XTI=2 EG=3.26 CJO=360.14E-12
+@@ -278,7 +278,7 @@ d1 3 4 dx
+ *******************************************************************
+ * Model name       : STPSC6H065G-TR
+ * Description      : Power Schottky rectifier
+-* Package type     : D≤PAK   in tape&reel
++* Package type     : D2PAK   in tape&reel
+ *******************************************************************
+ *model STPSC6H065G-TR  anode
+ *					   | cathode
+@@ -288,7 +288,7 @@ d1 3 4 dx
+ .model dx	D(IS=1.0831E-15 N=1.0873 RS=92.529E-3 IKF=1.8184 CJO=289.19E-12 M=.44088
+ +			  VJ=1.6095 ISR=34.491E-9 NR=2.6336 FC=0.5 TT=0 XTI=2 EG=3.26)
+ 
+-*	STMicroelectronics	case=D≤PAK      Delivery = Tape & reel
++*	STMicroelectronics	case=D2PAK      Delivery = Tape & reel
+ .ends
+            
+ *******************************************************************
+@@ -359,7 +359,7 @@ d1 3 4 dx
+ *******************************************************************
+ * Model name       : STPSC8H065G-TR
+ * Description      : Power Schottky rectifier
+-* Package type     : D≤PAK   in tape&reel
++* Package type     : D2PAK   in tape&reel
+ *******************************************************************
+ *model STPSC8H065G-TR  anode
+ *					   | cathode
+@@ -369,7 +369,7 @@ d1 3 4 dx
+ .model dx	D(IS=15.653E-18 N=.93123 RS=77.690E-3 IKF=1.0000E3 CJO=409.87E-12 M=.43606
+ +			  VJ=1.5432 ISR=54.323E-9 NR=1.8317 FC=0.5 TT=0 XTI=2 EG=3.26)
+ 
+-*	STMicroelectronics	case=D≤PAK      Delivery = Tape & reel
++*	STMicroelectronics	case=D2PAK      Delivery = Tape & reel
+ .ends                             
+                             
+ *******************************************************************
+@@ -431,7 +431,7 @@ d1 3 4 dx
+ *******************************************************************
+ * Model name       : STPSC10H065G-TR
+ * Description      : Power Schottky rectifier
+-* Package type     : D≤PAK   in tape&reel
++* Package type     : D2PAK   in tape&reel
+ *******************************************************************
+ *model STPSC10H065G-TR  anode
+ *					    | cathode
+@@ -441,7 +441,7 @@ d1 3 4 dx
+ .model dx	D(IS=510.14E-21 N=.94967 RS=54.909E-3 IKF=1.0000E3 CJO=483.36E-12 M=.44365
+ +			  VJ=1.7167 ISR=55.766E-9 NR=2.8818 FC=0.5 TT=0 XTI=2 EG=3.26)
+ 
+-*	STMicroelectronics	case=D≤PAK      Delivery = Tape & reel
++*	STMicroelectronics	case=D2PAK      Delivery = Tape & reel
+ .ends
+ 
+ *******************************************************************
+@@ -549,7 +549,7 @@ d1 3 4 dx
+ *******************************************************************
+ * Model name       : STPSC12H065G-TR
+ * Description      : Power Schottky rectifier
+-* Package type     : D≤PAK   in tape&reel
++* Package type     : D2PAK   in tape&reel
+ *******************************************************************
+ *model STPSC12H065G-TR  anode
+ *					    | cathode
+@@ -559,7 +559,7 @@ d1 3 4 dx
+ .model dx	D(IS=1.0773E-15 N=1.0548 RS=50.078E-3 IKF=8.2204 CJO=602.01E-12 M=.43897
+ +			  VJ=1.6031 ISR=201.30E-9 NR=2.6372 FC=0.5 TT=0 XTI=2 EG=3.26)
+ 
+-*	STMicroelectronics	case=D≤PAK      Delivery = Tape & reel
++*	STMicroelectronics	case=D2PAK      Delivery = Tape & reel
+ .ends
+ 
+ *******************************************************************
+@@ -766,7 +766,7 @@ d2 3 2 dx
+ *******************************************************************
+ * Model name       : STPSC10H12G2-TR
+ * Description      : 1200 V, 10 A, silicon carbide power Schottky diode
+-* Package type     : D≤PAK HV  in tape&reel
++* Package type     : D2PAK HV  in tape&reel
+ *******************************************************************
+ *model STPSC10H12G2-TR  anode
+ *		    	  	    | cathode
+@@ -802,7 +802,7 @@ d1 3 4 dx
+ *******************************************************************
+ * Model name       : STPSC15H12G2-TR
+ * Description      : 1200 V, 10 A, silicon carbide power Schottky diode
+-* Package type     : D≤PAK HV  in tape&reel
++* Package type     : D2PAK HV  in tape&reel
+ *******************************************************************
+ *model STPSC15H12G2-TR  anode
+ *		    	  	    | cathode
+@@ -856,7 +856,7 @@ d2 3 2 dx
+ *******************************************************************
+ * Model name       : STPSC20H12G
+ * Description      : Power Schottky rectifier
+-* Package type     : D≤PAK   in tape&reel
++* Package type     : D2PAK   in tape&reel
+ *******************************************************************
+ *model STPSC20H12G		anode
+ *					    | cathode
+@@ -866,13 +866,13 @@ d1 3 4 dx
+ .model dx	D(IS=30.694E-15 N=1.1357 RS=16.654E-3 IKF=3.5832 CJO=1.6E-9 M=.4315
+ + VJ=1.1575 ISR=412.90E-9 NR=4.9461 TT=0 XTI=2 EG=3.26 FC=0.5)
+ 
+-*	STMicroelectronics	case=D≤PAK      Delivery = Tape & reel
++*	STMicroelectronics	case=D2PAK      Delivery = Tape & reel
+ .ends
+ 
+ *******************************************************************
+ * Model name       : STPSC20H12G2-TR
+ * Description      : 1200 V, 10 A, silicon carbide power Schottky diode
+-* Package type     : D≤PAK HV  in tape&reel
++* Package type     : D2PAK HV  in tape&reel
+ *******************************************************************
+ *model STPSC20H12G2-TR  anode
+ *		    	  	    | cathode

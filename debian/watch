@@ -1,0 +1,19 @@
+Version: 5
+
+# We ignore all x.99.x versions and map them back to x.0.x
+Source: https://gitlab.com/kicad/code/kicad.git
+Mode: git
+Matching-Pattern: refs/tags/(\d+\.\d+\.\d+(?:\.?beta[1-9])?)
+Uversion-Mangle: s/-(beta|rc|dev)/~$1/; s/\.-(beta|rc|dev)\.\d.*//; s/\.99/\.0/; s/\.\.//
+Oversion-Mangle: s/$/+dfsg/
+Dversion-Mangle: auto
+
+Source: https://gitlab.com/kicad/services/kicad-doc.git
+Version-Constraint: same
+Mode: git
+Component: doc
+Matching-Pattern: refs/tags/(\d+\.\d+\.\d+(?:\.?beta[1-9])?)
+Filename-Mangle: auto
+Uversion-Mangle: s/-(beta|rc|dev)/~$1/; s/\.-(beta|rc|dev)\.\d.*//; s/\.99/\.0/; s/\.\.//
+Oversion-Mangle: s/$/+dfsg/
+Dversion-Mangle: auto

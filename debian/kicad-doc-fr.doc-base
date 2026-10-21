@@ -1,0 +1,11 @@
+Document: kicad-doc-fr
+Title: Various KiCad documentation
+Author: KiCad developer and contributers
+Abstract: Documentation and Manuals for the KiCad EDA suite that was build
+ from the provided source.
+Section: Help/HOWTO
+
+Format: HTML
+Index: /usr/share/doc/kicad/help/fr/
+Files: /usr/share/doc/kicad/help/fr/*.html
+       /usr/share/doc/kicad/help/fr/images/*

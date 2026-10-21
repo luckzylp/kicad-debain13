@@ -1,0 +1,23 @@
+From: Carsten Schoenert <c.schoenert@t-online.de>
+Date: Tue, 15 Aug 2023 23:29:09 +0200
+Subject: KiCadFullVersion: Drop hyphen in the string
+
+We don't want the hyphen in the composed string of KICAD_VERSION_FULL so
+this string is representing the complete Debian version in the end.
+
+Forwarded: Not-Needed
+---
+ cmake/KiCadFullVersion.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cmake/KiCadFullVersion.cmake b/cmake/KiCadFullVersion.cmake
+index 1907db4..ae1e773 100644
+--- a/cmake/KiCadFullVersion.cmake
++++ b/cmake/KiCadFullVersion.cmake
+@@ -36,5 +36,5 @@ set( KICAD_VERSION_FULL "${KICAD_VERSION}" )
+ 
+ # Optional user version information defined at configuration.
+ if( KICAD_VERSION_EXTRA )
+-    set( KICAD_VERSION_FULL "${KICAD_VERSION_FULL}-${KICAD_VERSION_EXTRA}" )
++    set( KICAD_VERSION_FULL "${KICAD_VERSION_FULL}${KICAD_VERSION_EXTRA}" )
+ endif()

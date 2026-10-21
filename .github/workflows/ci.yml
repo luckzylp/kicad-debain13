@@ -1,0 +1,63 @@
+name: CI
+
+# Fast checks only.  The full package build runs in build.yml on a tag or on
+# manual dispatch, because a KiCad build is too expensive for every push.
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Lint and provenance
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    container:
+      image: debian:13@sha256:4c25275446ca371766b8b093c696782eabce06263fccacb8d5d813b3dc44b308
+      options: --user root
+    steps:
+      - name: Bootstrap checkout dependencies
+        shell: bash
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends ca-certificates git zstd
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          clean: true
+          fetch-depth: 0
+      - name: Install CI tools
+        run: ./scripts/install-ci-tools.sh
+      - name: Run repository checks
+        run: ./scripts/ci/lint.sh
+
+  dependencies:
+    name: Resolve Build-Depends on Debian 13
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    container:
+      image: debian:13@sha256:4c25275446ca371766b8b093c696782eabce06263fccacb8d5d813b3dc44b308
+      options: --user root
+    steps:
+      - name: Bootstrap checkout dependencies
+        shell: bash
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends ca-certificates git zstd
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          clean: true
+      - name: Install packaging tools
+        run: ./scripts/install-build-tools.sh
+      - name: Verify Trixie can satisfy debian/control
+        run: ./scripts/check-build-deps.sh "$GITHUB_WORKSPACE"

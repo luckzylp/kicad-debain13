@@ -1,0 +1,133 @@
+name: Release
+
+# Only a tag push can publish.  The build and install test run first; the
+# publish job is gated by the "release" GitHub Environment (configure required
+# reviewers in repository settings).
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Validate tag and manifest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          clean: true
+          fetch-depth: 1
+      - name: Install manifest tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends dpkg-dev gnupg
+      - name: Refuse mismatched tags
+        run: ./scripts/validate-release-tag.sh
+
+  build:
+    name: Build and smoke-test
+    needs: validate
+    uses: ./.github/workflows/build.yml
+    with:
+      # Set the repository variable KICAD_BUILD_RUNNER to self-hosted-vm to
+      # build on a real Debian 13 VM; otherwise a Debian 13 container is used.
+      runner: ${{ vars.KICAD_BUILD_RUNNER || 'github-hosted' }}
+      scope: arch
+
+  publish:
+    name: Publish verified release
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    environment: release
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RELEASE_KEY_FINGERPRINT: ${{ vars.RELEASE_KEY_FINGERPRINT }}
+      RELEASE_GPG_PRIVATE_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
+      RELEASE_GPG_PASSPHRASE: ${{ secrets.RELEASE_GPG_PASSPHRASE }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          clean: true
+          fetch-depth: 1
+
+      - name: Install manifest tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends dpkg-dev gnupg
+
+      - name: Download the tested artifact
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: kicad-debian13-amd64
+          path: dist
+
+      - name: Download the clean-install smoke-test report
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: kicad-debian13-smoke-test
+          path: smoke-reports
+
+      - name: Re-check the tag against the manifest
+        run: ./scripts/validate-release-tag.sh
+
+      - name: Verify the checksums produced by the build
+        working-directory: dist
+        run: sha256sum -c SHA256SUMS
+
+      - name: Attach the smoke-test report
+        run: |
+          set -euo pipefail
+          mkdir -p dist/reports
+          cp -v smoke-reports/smoke-test.txt dist/reports/
+
+      - name: Generate release notes
+        run: ./scripts/make-release-notes.sh
+
+      - name: Sign checksums and export the public key
+        run: ./scripts/sign-release.sh
+
+      - name: Verify the signed checksums with the exported public key
+        run: |
+          set -euo pipefail
+          export GNUPGHOME
+          GNUPGHOME="$(mktemp -d "${RUNNER_TEMP:-/tmp}/kicad-verify-gnupg.XXXXXX")"
+          trap 'rm -rf "$GNUPGHOME"' EXIT
+          chmod 700 "$GNUPGHOME"
+          gpg --batch --import dist/release-key.asc >/dev/null 2>&1
+          gpg --batch --verify dist/SHA256SUMS.asc dist/SHA256SUMS
+          ( cd dist && sha256sum -c SHA256SUMS )
+
+      - name: Create GitHub Release
+        run: |
+          set -euo pipefail
+          # shellcheck disable=SC1091
+          source packaging/versions.env
+          version="$(dpkg-parsechangelog -l debian/changelog -S Version)"
+          gh release create "$GITHUB_REF_NAME" \
+            --verify-tag \
+            --latest \
+            --title "KiCad ${UPSTREAM_VERSION} for Debian 13 (${ARCHITECTURE})" \
+            --notes-file dist/RELEASE-NOTES.md \
+            dist/*.deb \
+            dist/*.buildinfo \
+            dist/*.changes \
+            dist/SHA256SUMS \
+            dist/SHA256SUMS.asc \
+            dist/build-info.json \
+            dist/RELEASE-NOTES.md \
+            dist/release-key.asc \
+            dist/reports/*
+          printf 'published %s for %s\n' "$GITHUB_REF_NAME" "$version"

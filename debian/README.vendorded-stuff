@@ -1,0 +1,62 @@
+KiCad 7++ comes with vendored packaged which are used within the build process.
+Not all of the used upstream vendored packages are available in Debian, and
+some of them are not needed within the build in Debian as they are specific
+for the Windows OS.
+
+The folder thirdparty/ is containing all the vendored software. The various
+used upstream software is not always a complete copy of the upstream project!
+
+This file is collecting the current state and will hold information about
+the things that need to happen from POV of Debian.
+
+1. Collect vendored shipped packages                     Done  🟩
+1. Collect package information:                          WIP   🟨
+2. Collect packages which need WNPP bug:                 ToDo  🟥
+3. Request configuration options to use system packages: ToDo  🟥
+
+Vendored package       License      Debian equivalent      Upstream resource
+----------------------------------------------------------------------------
+3dxware_sdk            unknwon                None
+argparse               BSL-1.0                libargparse-dev        https://github.com/p-ranav/argparse
+clipper2               BSL-1.0                None                   http://www.angusj.com/clipper2/Docs/Overview.htm
+compoundfilereader     Expat                  None                   https://github.com/microsoft/compoundfilereader
+delaunator             Expat                  None                   https://github.com/abellgithub/delaunator-cpp
+dxflib_qcad            GPL-2.0+               libdxflib-dev          https://www.qcad.org/en/what-is-dxflib
+dynamic_bitset         Expat                  None                   https://github.com/pinam45/dynamic_bitset
+expected               CC0-1.0                None                   https://github.com/TartanLlama/expected
+fmt                    Expat with exception   libfmt-dev             https://fmt.dev/
+glew                   BSD-3-clause           libglew-dev            http://glew.sourceforge.net
+                       Mesa
+                       GPL-2.0+
+gzip-hpp               BSD-2-clause           None                   https://github.com/mapbox/gzip-hpp
+json_schema_validator  Expat                  None                   https://github.com/pboettch/json-schema-validator     Patch applied
+lemon                  public-domain          lemon                  https://www.sqlite.org/
+libcontext             BSL1.0                 None                   Kicad specific modification of the Boost library
+libpopcnt              BSD-2-clause           None                   https://github.com/kimwalisch/libpopcnt
+magic_enum             Expat                  libmagicenum-dev       https://github.com/Neargye/magic_enum
+markdown2html                                 libsoldout-utils ?     http://fossil.instinctive.eu/index.html ?
+nanodbc                Expat                  None                   https://github.com/nanodbc/nanodbc
+nanosvg                Zlib                   libnanosvg-dev         https://github.com/memononen/nanosvg
+nlohmann_json          Expat                  nlohmann-json3-dev     https://github.com/nlohmann/json
+                       Expat                  None                   https://github.com/nlohmann/fifo_map
+other_math             GPL-2                  None                   ?
+pegtl                  BSL-1.0                (pegtl-dev)            https://github.com/taocpp/PEGTL
+picosha2               GPL-2                  None                   https://github.com/okdshin/PicoSHA2
+potrace                GPL-2+                 libpotrace-dev         https://potrace.sourceforge.net/
+pybind11               BSD-3-clause+CLA       pybind11-dev           https://github.com/pybind/pybind11
+                       BSD-2-clause
+rectpack2d             Expat                  None                   https://github.com/TeamHypersomnia/rectpack2D
+rtree                  GPL-3+                 None                   https://github.com/nushoin/RTree
+sentry-native (got filtered out!)
+thread-pool            Expat                  None                   https://github.com/bshoshany/thread-pool
+tinyspline_lib         Expat                  None                   https://github.com/msteinbeck/tinyspline
+turtle                 BSL-1.0                None                   https://github.com/mat007/turtle
+
+
+Footnotes
+---------
+Emojis are taken from https://unicode.org/emoji/charts/full-emoji-list.html
+
+🟩 https://unicode.org/emoji/charts/full-emoji-list.html#1f7e9
+🟨 https://unicode.org/emoji/charts/full-emoji-list.html#1f7e8
+🟥 https://unicode.org/emoji/charts/full-emoji-list.html#1f7e5

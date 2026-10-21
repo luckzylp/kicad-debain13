@@ -1,0 +1,22 @@
+# Those files are some kind of a library and not executable.
+kicad: no-manual-page [usr/bin/_cvpcb.kiface]
+kicad: no-manual-page [usr/bin/_eeschema.kiface]
+kicad: no-manual-page [usr/bin/_gerbview.kiface]
+kicad: no-manual-page [usr/bin/kicad-cli]
+kicad: no-manual-page [usr/bin/_kipython.kiface]
+kicad: no-manual-page [usr/bin/_pcb_calculator.kiface]
+kicad: no-manual-page [usr/bin/_pcbnew.kiface]
+kicad: no-manual-page [usr/bin/_pl_editor.kiface]
+# KiCad upstream has no dev package currently nor intend to create one
+kicad: link-to-shared-library-in-wrong-package usr/lib/*-linux-*/libkiapi.so.* [usr/lib/*-linux-*/libkiapi.so]
+kicad: link-to-shared-library-in-wrong-package usr/lib/*-linux-*/libkicad_3dsg.so.* [usr/lib/*-linux-*/libkicad_3dsg.so]
+kicad: link-to-shared-library-in-wrong-package usr/lib/*-linux-*/libkicommon.so.* [usr/lib/*-linux-*/libkicommon.so]
+kicad: link-to-shared-library-in-wrong-package usr/lib/*-linux-*/libkigal.so.* [usr/lib/*-linux-*/libkigal.so]
+kicad: no-symbols-control-file usr/lib/*-linux-*/libkiapi.so.*
+kicad: no-symbols-control-file usr/lib/*-linux-*/libkicad_3dsg.so.*
+kicad: no-symbols-control-file usr/lib/*-linux-*/libkicommon.so.*
+kicad: no-symbols-control-file usr/lib/*-linux-*/libkigal.so.*
+# Related to the above override, we have no dedicated library package.
+kicad: package-name-doesnt-match-sonames libkiapi* libkicad-3dsg* libkicommon* libkigal*
+# This library is for internal use only.
+kicad: ships-undeclared-shared-library libkicad_3dsg 2.0.0 *

@@ -1,0 +1,51 @@
+kicad (6.0.0+dfsg1-1) unstable; urgency=medium
+
+  Changes introduced by kicad 6.0.0
+  ---------------------------------
+
+  Again with this new major version KiCad has some important changes that are
+  backwards incompatible.
+
+  The project file format and also the symbol file format has changed!
+
+  !!! Please make a backup of your existing projects before proceeding !!!
+
+  Further modifications did happen to the environment management of KiCad.
+  Due the new introduced symbol file format you will need to update any local
+  symbol files before you can use them again.
+
+  Please have a look at the README.Debian file for the package kicad, it
+  includes some further information.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 02 Jan 2021 14:50:00 +0100
+
+kicad (5.0.0+dfsg1-1) unstable; urgency=medium
+
+  Changes introduced by kicad 5.0.0
+  ---------------------------------
+
+  By updating the kicad package from 4.0.7 to 5.x.x some important changes need
+  to be noted.
+
+  The way symbol libraries are defined and accessed has been modified since
+  4.0.7, this brings in that old schematics will need a remapping. This will
+  happen while open old schematics within a 5.x.x version.
+  !!! Please backup your data before open and modifying your projects !!!
+
+  The official libraries have got a complete rework and aren't backward
+  compatible, once you have used the new libraries your project can't be open
+  in older versions of kicad without a high risk of damage the project.
+
+  The old environment variable KICAD_PTEMPLATES has been replaced by
+  KICAD_TEMPLATE_DIR, you may need adjust the old used name to the new one. A
+  new environment variable KICAD_USER_TEMPLATE_DIR was added which is dedicated
+  for pointing to personal templates from users.
+
+  Please read also README.Debian and also Blogposts and News from the KiCad
+  website. If you not already have visit the KiCad forum you should give it a
+  try.
+
+    http://kicad.org
+    https://forum.kicad.info/
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 22 Jul 2018 11:02:00 +0800

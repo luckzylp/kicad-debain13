@@ -1,0 +1,8 @@
+Tests:
+ smoke,
+Depends:
+ kicad,
+Restrictions:
+ allow-stderr,
+ skippable,
+ superficial,

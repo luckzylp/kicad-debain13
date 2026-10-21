@@ -1,0 +1,7 @@
+# Paths (relative to the repository root) that may differ from the official
+# Debian packaging tarball.  Everything else under debian/ must be byte-for-byte
+# identical to the signed source package.
+#
+# Adding a downstream patch or changing a packaging file requires adding its
+# path here and documenting the reason in debian/changelog and docs/BUILD.md.
+debian/changelog

@@ -1,0 +1,51 @@
+From: Georges Khaznadar <georgesk@debian.org>
+Date: Sat, 3 Sep 2016 17:57:10 +0200
+Subject: Adjusting content in the desktop-files
+
+Almost only extending / modifying the 'Keyword' values to catch up more
+topics.
+---
+ resources/linux/launchers/org.kicad.bitmap2component.desktop.in | 2 +-
+ resources/linux/launchers/org.kicad.kicad.desktop.in            | 2 +-
+ resources/linux/launchers/org.kicad.pcbnew.desktop.in           | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/resources/linux/launchers/org.kicad.bitmap2component.desktop.in b/resources/linux/launchers/org.kicad.bitmap2component.desktop.in
+index 5e8cc6b..28a7997 100644
+--- a/resources/linux/launchers/org.kicad.bitmap2component.desktop.in
++++ b/resources/linux/launchers/org.kicad.bitmap2component.desktop.in
+@@ -2,7 +2,7 @@
+ Version=1.0
+ Terminal=false
+ Icon=@KICAD_DESKTOP_FILE_ICON_PREFIX@bitmap2component
+-Keywords=bitmap2component;Bitmap;Converter;
++Keywords=Bitmap;Converter;
+ Type=Application
+ Categories=Science;Electronics;
+ Exec=bitmap2component %f
+diff --git a/resources/linux/launchers/org.kicad.kicad.desktop.in b/resources/linux/launchers/org.kicad.kicad.desktop.in
+index 57ba467..3027886 100644
+--- a/resources/linux/launchers/org.kicad.kicad.desktop.in
++++ b/resources/linux/launchers/org.kicad.kicad.desktop.in
+@@ -6,7 +6,7 @@ Type=Application
+ Categories=Science;Electronics;
+ Exec=kicad %f
+ StartupWMClass=kicad
+-Keywords=Projectmanager;
++Keywords=KiCad;Projectmanager;
+ MimeType=application/x-kicad-project;
+ Name=KiCad
+ GenericName=EDA Suite
+diff --git a/resources/linux/launchers/org.kicad.pcbnew.desktop.in b/resources/linux/launchers/org.kicad.pcbnew.desktop.in
+index 470360c..8fd2419 100644
+--- a/resources/linux/launchers/org.kicad.pcbnew.desktop.in
++++ b/resources/linux/launchers/org.kicad.pcbnew.desktop.in
+@@ -1,7 +1,7 @@
+ [Desktop Entry]
+ Version=1.0
+ Terminal=false
+-Keywords=pcbnew;PCB;Circuit;Layout;Design;Editor;Footprint;
++Keywords=PCB;Circuit;Layout;Design;Editor;Footprint;
+ Icon=@KICAD_DESKTOP_FILE_ICON_PREFIX@pcbnew
+ Type=Application
+ Categories=Science;Electronics;

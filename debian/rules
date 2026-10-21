@@ -1,0 +1,177 @@
+#!/usr/bin/make -f
+#export DH_VERBOSE=1
+
+export DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/architecture.mk
+include /usr/share/dpkg/buildflags.mk
+CFLAGS+=$(CPPFLAGS)
+CXXFLAGS+=$(CPPFLAGS)
+
+# workaround for https://gcc.gnu.org/bugzilla/show_bug.cgi?id=81358
+ifneq (,$(filter $(DEB_HOST_ARCH), armel m68k powerpc sh4))
+    export DEB_LDFLAGS_MAINT_APPEND += -Wl,--no-as-needed -latomic -Wl,--as-needed
+endif
+
+# out of tree build folder for kicad application
+DEB_BUILD_DIR=debian/build
+# default install folder
+INSTDIR=$(CURDIR)/debian/tmp
+# catching make jobs from DEB_BUILD_OPTIONS
+PARALLEL_BUILD=$(echo $DEB_BUILD_OPTIONS | sed -e '/parallel=/!s/.*/1/;s/.*parallel=\([0-9]\+\).*/\1/g')
+
+# other variables
+include /usr/share/dpkg/pkg-info.mk
+DEB_VERSION_APPENDIX = $(shell echo $(DEB_VERSION) | sed 's/.*+/+/')
+DATE            = $(shell date +'%Y-%m-%d' -d@"$(SOURCE_DATE_EPOCH)")
+export REVDATE := $(shell TZ=UTC date -d@"$(SOURCE_DATE_EPOCH)" +%Y-%m-%d)
+
+PREPROCESS_FILES := $(wildcard debian/*.in)
+
+ASCIIDOCFILES := \
+	doc/src/doc_writing_style_policy/doc_writing_style_policy.adoc \
+	doc/src/eeschema/eeschema.adoc \
+	doc/src/gerbview/gerbview.adoc \
+	doc/src/getting_started_in_kicad/getting_started_in_kicad.adoc \
+	doc/src/kicad/kicad.adoc \
+	doc/src/pcbnew/pcbnew.adoc \
+	doc/src/pl_editor/pl_editor.adoc \
+	$(NULL)
+
+DEB_KICAD_CMAKE_OPTS := \
+	-DCMAKE_CXX_FLAGS="$(CXXFLAGS) -DNDEBUG" \
+	-DCMAKE_INSTALL_PREFIX=/usr \
+	-DCMAKE_SHARED_LINKER_FLAGS_RELEASE="$(LDFLAGS)" \
+	-DKICAD_BUILD_I18N=ON \
+	-DKICAD_I18N_UNIX_STRICT_PATH=ON \
+	-DKICAD_INSTALL_DEMOS=ON \
+	-DKICAD_SCRIPTING_WXPYTHON=ON \
+	-DKICAD_SPICE=ON \
+	-DKICAD_UPDATE_CHECK=OFF \
+	-DKICAD_USE_CMAKE_FINDPROTOBUF=ON \
+	-DKICAD_USE_EGL=OFF \
+	-DKICAD_VERSION_EXTRA="$(DEB_VERSION_APPENDIX)" \
+	$(NULL)
+
+DEB_DOC_CMAKE_OPTS := \
+	-DCMAKE_INSTALL_PREFIX=/usr \
+	-DBUILD_FORMATS=html \
+	$(NULL)
+
+$(PREPROCESS_FILES:.in=): %: %.in
+	sed -e 's,/@DEB_HOST_MULTIARCH@,$(DEB_HOST_MULTIARCH:%=/%),g' $< > $@
+
+%:
+	dh $@ --with-python3
+
+override_dh_clean:
+	dh_clean
+	rm -rf $(DEB_BUILD_DIR)
+	find -type d -name ".mypy_cache" -delete
+
+override_dh_auto_configure:
+	#sed -i 's/@REVDATE@/$(REVDATE)/' $(ASCIIDOCFILES)
+	mkdir -p $(DEB_BUILD_DIR)
+	#################################
+	# configuring KiCad application #
+	#################################
+	dh_auto_configure --sourcedirectory=$(CURDIR) --builddirectory=$(DEB_BUILD_DIR) -- $(DEB_KICAD_CMAKE_OPTS)
+	###################################
+	# configuring KiCad documentation #
+	###################################
+	dh_auto_configure -i --sourcedirectory=$(CURDIR)/doc --builddirectory=$(DEB_BUILD_DIR)/doc -- $(DEB_DOC_CMAKE_OPTS)
+
+override_dh_auto_build-arch:
+	##############################
+	# building KiCad application #
+	##############################
+	dh_auto_build --sourcedirectory=$(CURDIR) --builddirectory=$(DEB_BUILD_DIR)
+
+override_dh_auto_build-indep:
+	################################
+	# building KiCad documentation #
+	################################
+	dh_auto_build --sourcedirectory=$(CURDIR)/doc --builddirectory=$(DEB_BUILD_DIR)/doc
+
+override_dh_auto_install-arch: $(PREPROCESS_FILES:.in=)
+	################################
+	# installing KiCad application #
+	################################
+	dh_auto_install --destdir=$(INSTDIR) --sourcedirectory=$(CURDIR) --builddirectory=$(DEB_BUILD_DIR)
+	# Removing a potentially added RUNPATH from the Pcbnew Python library.
+	chrpath --delete $(CURDIR)/debian/tmp/usr/lib/python3/dist-packages/_pcbnew.so
+	# some tweaks before running the next dh sequencers
+	# fixing icon sizes
+	IMAGES=$$(find $(INSTDIR)/usr/share/icons/hicolor/48x48 -name "*.png"); \
+	for FILE in $${IMAGES}; do \
+		SIZE=$$(identify $${FILE} | sed -n 's/.* PNG \(4[^ ]*\) .*/\1/ p'); \
+		if [ "$${SIZE}" != "48x48" ]; then \
+			echo "Resize $$(basename $${FILE}) : $${SIZE} => 48x48"; \
+			convert -resize '48x48!' $$f $${FILE}.tmp && mv $${FILE}.tmp $${FILE}; \
+		fi; \
+	done
+
+override_dh_auto_install-indep: $(PREPROCESS_FILES:.in=)
+	##########################
+	# installing KiCad demos #
+	##########################
+	dh_auto_install --destdir=$(INSTDIR) --sourcedirectory=$(CURDIR) --builddirectory=$(DEB_BUILD_DIR)/demos
+	# Remove any uneeded License or Readme related files in kicad-demos.
+	find $(INSTDIR)/usr/share/kicad/demos -type f \(\
+	    -name "*.md" -o \
+	    -name "license.txt" -o \
+	    -name "LICENSE*" -o \
+	    -name "README*" \
+	    \) -exec rm {} \;
+	# Remove any left over VCS control files.
+	find $(INSTDIR)/usr/share/kicad -type f -name ".gitmodules" -exec rm {} \;
+	##################################
+	# installing KiCad documentation #
+	##################################
+	dh_auto_install --destdir=$(INSTDIR) --sourcedirectory=$(CURDIR)/doc --builddirectory=$(DEB_BUILD_DIR)/doc
+
+override_dh_install-arch:
+	dh_install -a
+	dh_python3
+	# The KiCad XPM icon comes with a to high resolution, fixing before install.
+	convert -resize '32x32!' $(CURDIR)/debian/kicad/usr/share/pixmaps/icon_kicad.xpm $(CURDIR)/debian/kicad/usr/share/pixmaps/icon_kicad.xpm
+
+override_dh_install-indep:
+	dh_install -i
+
+override_dh_fixperms-arch:
+	dh_fixperms
+	# fixing file permissions for *.py files in kicad
+	for FILE in `find $(CURDIR)/debian/kicad/usr -type f -name "*.py"`; do \
+		FOUND_PYTHON=$$(head -n1 $${FILE} | grep python); \
+		if [ "$${FOUND_PYTHON}" != "" ]; then \
+			chmod +x $${FILE}; \
+		else \
+			chmod -x $${FILE}; \
+		fi; \
+	done
+
+override_dh_missing:
+	dh_missing --exclude usr/share/doc/kicad/scripts/lib_convert.py \
+	           --exclude usr/share/doc/kicad/scripts/test_plugin.py \
+	           --exclude usr/share/doc/kicad/scripts/test_kicad_plugin.py \
+	           --exclude usr/share/doc/kicad/scripts/ddr3_length_match.py
+
+override_dh_strip-arch:
+	dh_strip
+	# strip unneeded symbols from the kicad specific libraries in /usr/lib/kicad/
+	strip --strip-unneeded --remove-section=.comment $(CURDIR)/debian/kicad/usr/lib/kicad/_*.kiface
+
+override_dh_makeshlibs:
+	dh_makeshlibs -a \
+		-Xlibkicad_3dsg \
+		-Xlibs3d_plugin_idf \
+		-Xlibs3d_plugin_oce \
+		-Xlibs3d_plugin_vrml \
+		-X_pcbnew.$(DEB_HOST_MULTIARCH)
+
+override_dh_dwz:
+# not running dh_dwz as it's  running into an error
+# ...
+# dwz: debian/kicad/usr/lib/kicad/_pcbnew.kiface: Too many DIEs (--max-die-limit=50000000), not optimizing

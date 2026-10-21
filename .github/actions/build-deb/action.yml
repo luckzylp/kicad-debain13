@@ -1,0 +1,103 @@
+name: Build KiCad Debian package
+description: Build, audit, and checksum the package inside Debian 13
+
+inputs:
+  scope:
+    description: "arch (kicad only) or full (also demos and docs)"
+    required: false
+    default: arch
+  artifact-name:
+    description: GitHub Actions artifact name
+    required: false
+    default: kicad-debian13-amd64
+
+runs:
+  using: composite
+  steps:
+    - name: Prepare workspace
+      shell: bash
+      env:
+        SCOPE: ${{ inputs.scope }}
+      run: '"$GITHUB_WORKSPACE/scripts/prepare-workspace.sh"'
+
+    - name: Restore authenticated source cache
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+      with:
+        path: .cache/downloads
+        key: kicad-sources-${{ hashFiles('packaging/sources.sha256') }}
+        restore-keys: |
+          kicad-sources-
+
+    - name: Install packaging tools
+      shell: bash
+      run: '"$GITHUB_WORKSPACE/scripts/install-build-tools.sh"'
+
+    - name: Fetch and authenticate official Debian source
+      shell: bash
+      run: '"$GITHUB_WORKSPACE/scripts/fetch-source.sh"'
+
+    - name: Verify vendored packaging provenance
+      shell: bash
+      run: '"$GITHUB_WORKSPACE/scripts/verify-packaging-provenance.sh"'
+
+    - name: Resolve Build-Depends against Debian 13
+      shell: bash
+      run: '"$GITHUB_WORKSPACE/scripts/check-build-deps.sh"'
+
+    - name: Install Build-Depends from Debian 13
+      shell: bash
+      run: '"$GITHUB_WORKSPACE/scripts/install-build-deps.sh"'
+
+    - name: Build Debian packages
+      shell: bash
+      env:
+        SCOPE: ${{ inputs.scope }}
+      run: '"$GITHUB_WORKSPACE/scripts/build-deb.sh" --scope "$SCOPE"'
+
+    - name: Static package checks
+      shell: bash
+      run: '"$GITHUB_WORKSPACE/scripts/test-package.sh"'
+
+    - name: Lintian and metadata audit
+      shell: bash
+      run: '"$GITHUB_WORKSPACE/scripts/audit-package.sh"'
+
+    - name: Collect audit and provenance reports
+      shell: bash
+      run: |
+        set -euo pipefail
+        mkdir -p "$GITHUB_WORKSPACE/dist/reports"
+        for file in \
+          build/reports/build-deps.txt \
+          build/reports/build-summary.txt \
+          build/reports/dependency-check.txt \
+          build/reports/dpkg-checkbuilddeps.txt \
+          build/reports/environment.txt \
+          build/reports/lintian.txt \
+          build/reports/tool-versions.txt \
+          build/source-provenance.txt; do
+          if [[ -f "$file" ]]; then
+            cp -v "$file" "$GITHUB_WORKSPACE/dist/reports/"
+          fi
+        done
+
+    - name: Generate checksums and build provenance
+      shell: bash
+      env:
+        SCOPE: ${{ inputs.scope }}
+        RUNNER_LABEL: ${{ runner.name }} (${{ runner.os }})
+      run: |
+        set -euo pipefail
+        "$GITHUB_WORKSPACE/scripts/make-checksums.sh"
+        python3 "$GITHUB_WORKSPACE/scripts/make-build-info.py" \
+          --scope "$SCOPE" \
+          --runner "$RUNNER_LABEL"
+        "$GITHUB_WORKSPACE/scripts/make-checksums.sh"
+
+    - name: Upload tested build artifact
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: dist/
+        if-no-files-found: error
+        retention-days: 14

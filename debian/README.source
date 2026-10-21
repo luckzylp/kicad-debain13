@@ -1,0 +1,44 @@
+KiCad packaging workflow
+------------------------
+
+KiCad uses git-buildpackage for the packaging maintenance. This means the whole
+Debian specific work is done in separate branches. The needed Debian specific
+patches will be managed by a so called patch-queue branch if needed.
+
+The KiCad source used for packaging is split off into the main application and
+some additional add-ons like the documentation (upstream kicad-doc called) and
+the localization (upstream kicad-i18n called).
+
+We use component tarballs to collect all the sources. git-buildpackage is able
+to handle those files for importing into the git tree as also for extracting
+the correct component tarballs later if needed. For the recreation of the
+orig*.tar.xz pristine-tar is doing the correct action.
+
+The source tarball and the additional component tarballs are currently created
+manually from cloned upstream git repositories. Normally the following calls
+are used to create the tarballs.
+
+ $ cd /path/to/kicad-tree
+ $ git archive --format=tar.xz --output ~/Downloads/kicad_5.0.2.orig.tar.xz 5.0.2
+
+ $ cd /path/to/kicad-doc-tree
+ $ git archive --format=tar.xz --output ~/Downloads/kicad_5.0.2.orig-doc.tar.xz 5.0.2
+
+ $ cd /path/to/kicad-i18n-tree
+ $ git archive --format=tar.xz --output ~/Downloads/kicad_5.0.2.orig-i18n.tar.xz 5.0.2
+
+Importing new source tarballs is done by git-buildpackage with adding the
+suffix 'dfsg<x>' to the version to import.
+
+ $ gbp import-orig --verbose --sign-tags --pristine-tar /path/to/kicad_5.0.2.orig.tar.xz
+ ...
+ What is the upstream version? [5.0.2] 5.0.2+dfsg1
+ ...
+
+The multi tarballs will be extracted to the following folders while importing
+the new version:
+
+  *.orig-doc.tar.xz    ->  doc/
+  *.orig-i18n.tar.xz   ->  i18n/
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>, Mon, 14 Jan 2019 12:50:00 +0100

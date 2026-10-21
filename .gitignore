@@ -1,0 +1,21 @@
+# Build output
+/build/
+/dist/
+/.cache/
+/.tmp/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Local downloads and Debian build products
+*.deb
+*.buildinfo
+*.changes
+*.dsc
+*.tar.xz
+*.tar.gz
+
+# Editor / OS noise
+.DS_Store
+*.swp

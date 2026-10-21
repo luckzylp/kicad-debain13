@@ -1,0 +1,2102 @@
+kicad (10.0.7+dfsg-1+trixie1) trixie; urgency=medium
+
+  * Downstream rebuild of the official Debian sid source package
+    10.0.7+dfsg-1 for Debian 13 (trixie), amd64 only.
+  * No source changes.  The vendored debian/ directory is the official
+    Debian packaging; only this changelog entry is added.
+  * The build is gated on Debian 13 dependency resolution, Lintian, a
+    clean-container install test, and kicad-cli smoke tests.  See
+    docs/BUILD.md and docs/RELEASE.md.
+  * The kicad binary package does not include the separately packaged
+    KiCad symbol/footprint/3D libraries.  Trixie ships 9.0.x library
+    packages that conflict with KiCad 10; install matching KiCad 10
+    libraries separately.
+
+ -- KiCad Debian 13 Maintainers <kicad-debian13@users.noreply.github.com>  Tue, 21 Oct 2026 10:18:09 +0800
+
+kicad (10.0.7+dfsg-1) unstable; urgency=medium
+
+  [ Simon Richter ]
+  * [332f62b] debian/watch: update to version 5
+  * [ea76039] debian/watch: use "auto" mode for Dversion-Mangle
+  * [2d62dcb] debian/watch, debian/copyright: exclude files
+  * [5fc653e] debian/watch: also pull documentation
+
+  [ Carsten Schoenert ]
+  * [50cbb2f] d/copyright: Keep Files-Excluded in alphabetical order
+  * [2ed0ee1] d/copyright: Remove all altium issues from qa/ folder
+  * [2550376] New upstream version 10.0.7+dfsg
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 11 Oct 2026 11:37:59 +0200
+
+kicad (10.0.6+dfsg-1) unstable; urgency=medium
+
+  * [be5fbe3] New upstream version 10.0.6+dfsg
+    (Closes: #1145498)
+  * [d16932b] d/kicad.lintian-overrides: Remove not needed override
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Tue, 01 Sep 2026 20:56:12 +0200
+
+kicad (10.0.5+dfsg-1) unstable; urgency=medium
+
+  * [2ff3c94] New upstream version 10.0.5+dfsg
+    (Closes: #1133510)
+  * [906fec5] Rebuild patch queue from patch-queue branch
+    + Added patch:
+      fixes/demos-Adjust-MIME-encoding-for-cm5_minima-STEP-file.patch
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Fri, 07 Aug 2026 22:42:28 +0200
+
+kicad (10.0.4+dfsg-1) unstable; urgency=medium
+
+  * [13043aa] New upstream version 10.0.4+dfsg
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 25 Jun 2026 16:38:39 +0200
+
+kicad (10.0.3+dfsg-1) unstable; urgency=medium
+
+  * [aa35389] New upstream version 10.0.3+dfsg
+  * [8c3bb81] d/control: Increase Standards-Version to 4.7.4
+    + No further changes needed.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Mon, 25 May 2026 15:52:39 +0200
+
+kicad (10.0.1+dfsg-1) unstable; urgency=medium
+
+  * [b6cc945] d/rules: Turn of the automatic update check
+  * [0961f30] d/control: Remove libglew-dev from B-D
+    (Closes: #1133157)
+  * [74cf7da] New upstream version 10.0.1+dfsg
+  * [9d01d08] Rebuild patch queue from patch-queue branch
+    Dropped patch (included upstream):
+    fixes/Revert-changes-to-use-unified-po4a.patch
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 16 Apr 2026 17:53:22 +0200
+
+kicad (10.0.0+dfsg-1) unstable; urgency=medium
+
+  [ Carsten Schoenert ]
+  * [2d7659c] d/gbp.conf: Adding some more files to filter out
+  * [a7b5c33] New upstream version 10.0.0+dfsg
+  * [5190e64] Rebuild patch queue from patch-queue branch
+    + Added patch:
+      fixes/Revert-changes-to-use-unified-po4a.patch
+    + Dropped patch (included upstream):
+      fixes/python-Use-raw-strings-expressions.patch
+  * [1b6a9e0] d/control: Add new needed build dependencies
+    + Thanks Matthias Geiger to spot the right ones.
+  * [49b6450] d/copyright: Update copyright information
+  * [d66816f] d/kicad-demos.install: Adjust sequencer data to install
+  * [6477777] d/kicad.install.in Adjust sequencer data to install
+  * [143ab94] d/rules: Don't call dh_dwz
+  * [c0ff04a] d/rules: Remove license.txt files too in kicad-demos
+  * [f38ec8a] d/control: Bump Bre/Sug/Rec versions to >=/<< 10.0.0~
+
+  [ Matthias Geiger ]
+  * [669669e] Update d/README.vendored-stuff
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 09 Apr 2026 17:17:35 +0200
+
+kicad (9.0.8+dfsg-1) unstable; urgency=medium
+
+  * [5be9246] d/control: Drop B-D on libboost-system-dev
+    (Closes: #1127217)
+  * [b057241] New upstream version 9.0.8+dfsg
+  * [bc1cded] d/control: Drop field Priority: optional
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Mon, 16 Mar 2026 19:39:37 +0200
+
+kicad (9.0.7+dfsg-1) unstable; urgency=medium
+
+  * [eb0edb5] New upstream version 9.0.7+dfsg
+  * [ace13a6] d/control: Increase Standards-Version to 4.7.3
+    + No further changes needed.
+  * [5726633] d/copyright: Update copyright information
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 03 Jan 2026 09:02:40 +0200
+
+kicad (9.0.6+dfsg-1) unstable; urgency=medium
+
+  * [55ebf80] New upstream version 9.0.6+dfsg
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Mon, 03 Nov 2025 18:44:05 +0200
+
+kicad (9.0.5+dfsg-1) unstable; urgency=medium
+
+  * [e1455f1] New upstream version 9.0.5+dfsg
+  * [0b7b915] d/rules: Remove VCS control files from install folder
+  * [f050c5c] d/copyright: Update copyright information
+  * [c6e17d9] d/kicad.lintian-overrides: Update content
+  * [b4b16b4] d/s/lintian-overrides: Use a more generic override
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Fri, 03 Oct 2025 11:54:38 +0200
+
+kicad (9.0.4+dfsg-1) unstable; urgency=medium
+
+  * [24f23f1] New upstream version 9.0.4+dfsg
+  * [234c290] d/kicad-demos.install: Adding more demos from upstream
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 24 Aug 2025 09:07:25 +0200
+
+kicad (9.0.3+dfsg-1) unstable; urgency=medium
+
+  [ Simon Richter ]
+  * [b6cdb99] Only configure directory that will be built
+  * [ac26b99] Split off build dependencies for documentation
+
+  [ Carsten Schoenert ]
+  * [0be6357] New upstream version 9.0.3+dfsg
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Wed, 16 Jul 2025 09:55:56 +0200
+
+kicad (9.0.2+dfsg-1) unstable; urgency=medium
+
+  * [2c5aa4f] New upstream version 9.0.2+dfsg
+  * [1e1cda8] d/copyright: Replace old FSF address with URL
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 10 May 2025 11:34:36 +0200
+
+kicad (9.0.1+dfsg-1) unstable; urgency=medium
+
+  [ Carsten Schoenert ]
+  * [23d6e54] New upstream version 9.0.1+dfsg
+  * [3682fc3] d/control: Increase Standards-Version to 4.7.2
+    + No further changes needed.
+  * [3f344b9] d/kicad-demos.install: Add new subfolder to install
+
+  [ RICCIARDI-Adrien ]
+  * [1c64540] Rebuild patch queue from patch-queue branch
+    + Updated patch:
+      fixes/Adjusting-content-in-the-desktop-files.patch
+      See also
+      https://salsa.debian.org/electronics-team/KiCad/kicad/-/merge_requests/2
+
+  [ John Paul Adrian Glaubitz ]
+  * [5f03e00] d/rules: Add needed linking for armel m68k powerpc sh4
+    (Closes: #1098791)
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Fri, 04 Apr 2025 16:07:28 +0200
+
+kicad (9.0.0+dfsg-1) unstable; urgency=medium
+
+  * [90a9b14] d/gbp.conf: Filter out one more PDF file
+  * [a4131fc] New upstream version 9.0.0+dfsg
+    (Closes: #1098475)
+  * [651264e] d/control: Add new needed Build-Deps
+  * [46e8aec] d/kicad.install.in: Add libkiapi to sequencer
+  * [80f8e81] d/rules: Add new CMAKE option to DEB_KICAD_CMAKE_OPTS
+  * [5341af1] d/s/lintian-overrides: Ignore non relevant Lintian detection
+  * [f2b0e1a] d/copyright: Update copyright information
+  * [39aae5e] d/kicad.lintian-overrides: Adjust content due changes
+  * [f3a620c] d/README.vendorded-stuff: Some more notes
+  * [83f540d] d/rules: Remove more unwanted files in kicad-demos
+  * [c50fcfa] d/rules: Use upper case, not one char variable names
+  * [3104e18] d/control: Increase Standards-Version to 4.7.1
+    + No further changes needed.
+  * [b04b0d0] d/control: Bump Bre/Sug/Rec versions to >=/<< 9.0.0~
+  * [5069e37] d/t/control: Sort entries by wrap-and-sort
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 23 Feb 2025 17:00:42 +0200
+
+kicad (8.0.8+dfsg-1) unstable; urgency=medium
+
+  * [414e014] New upstream version 8.0.8+dfsg
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 12 Jan 2025 10:43:51 +0200
+
+kicad (8.0.7+dfsg-2) unstable; urgency=medium
+
+  * [7ee0ffc] d/rules: Ignore dh_dwz on armhf
+    This architecture is providing too less memory dwz could be running
+    succesfully.
+    (Closes: #1091284)
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 26 Dec 2024 11:30:34 +0200
+
+kicad (8.0.7+dfsg-1) unstable; urgency=medium
+
+  * [b0daff1] New upstream version 8.0.7+dfsg
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Tue, 24 Dec 2024 13:46:07 +0200
+
+kicad (8.0.6+dfsg-1) unstable; urgency=medium
+
+  * [6b82f1b] New upstream version 8.0.6+dfsg
+    (Closes: #1084283)
+  * [899692f] Rebuild patch queue from patch-queue branch
+    + Updated patch:
+      reproducibility/doc-Add-field-revdate-to-asciidoc-files.patch
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Fri, 18 Oct 2024 19:16:53 +0200
+
+kicad (8.0.5+dfsg-1) unstable; urgency=medium
+
+  * [22aec90] New upstream version 8.0.5+dfsg
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 12 Sep 2024 17:23:50 +0200
+
+kicad (8.0.4+dfsg-1) unstable; urgency=medium
+
+  * [53b587f] New upstream version 8.0.4+dfsg
+  * [c6b9160] Rebuild patch queue from patch-queue branch
+    + Added patch:
+      fixes/python-Use-raw-strings-expressions.patch
+  * [a337b7b] d/rules: Clean out .mypy_cache folders in dh_clean
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 18 Jul 2024 17:32:31 +0200
+
+kicad (8.0.3+dfsg-1) unstable; urgency=medium
+
+  * [f7d4143] New upstream version 8.0.3+dfsg
+  * [cf2b4b4] Rebuild patch queue from patch-queue branch
+    + Added patch:
+      fixes/demos-Adjust-MIME-encoding-to-UTF8-of-some-libraries.patch
+  * [67536f2] d/copyright: Update content due added folder by upstream
+  * [d1377f8] Revert "Adding ldconfig triggering file"
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Wed, 05 Jun 2024 20:29:30 +0200
+
+kicad (8.0.2+dfsg-1) unstable; urgency=medium
+
+  [ zhangdandan ]
+  * [0ae6094] d/control: Add loongarch64 architecture
+    (Closes: #1059016)
+
+  [ Carsten Schoenert ]
+  * [4568d39] d/copyright: Updating due upstream modifications
+  * [db730d5] New upstream version 8.0.2+dfsg
+  * [b2841ed] d/control: Increase Standards-Version to 4.7.0
+  yy  + No further changes needed.
+  * [d788d27] d/k.lintian-overrides: Ignore ships-undeclared-shared-library
+  * [5a6d93d] d/copyright: Small adjustment on filtered content
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Wed, 01 May 2024 11:47:38 +0200
+
+kicad (8.0.1+dfsg-1) unstable; urgency=medium
+
+  * [ed981e2] d/gbp.conf: Add more content to filter out
+  * [585ff35] New upstream version 8.0.1+dfsg
+    (Closes: #1064546)
+  * [b679e37] d/control: Bump Bre/Sug/Rec versions to >=/<< 8.0.1~
+  * [aa552a3] Rebuild patch queue from patch-queue branch
+    + Dropped patch:
+      porting-kfreebsd-hurd/Fix-FTBFS-on-kFreeBSD-and-Hurd.patch
+  * [32d5f0e] d/control: Add new build dependencies
+    The build requires now libgit2-dev and libsecret-1-dev.
+  * [2e4fe8c] d/kicad.install.in: Add libki{common,gal} to sequencer
+  * [fc20fca] d/kicad-demos.install: Adjust sequencer data to install
+  * [a2ca39d] d/control: Adjust obsolet pkg-config => pkgconf
+  * [064d10c] d/kicad.lintian-overrides: Adjust some overrides
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 17 Mar 2024 14:58:18 +0100
+
+kicad (7.0.11+dfsg-1) unstable; urgency=medium
+
+  * [4cd41de] New upstream version 7.0.11+dfsg
+  * [ec30213] d/copyright: Update year data
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Fri, 23 Feb 2024 18:59:55 +0100
+
+kicad (7.0.10+dfsg-1) unstable; urgency=medium
+
+  * [c5309bc] New upstream version 7.0.10+dfsg
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 30 Dec 2023 17:02:59 +0100
+
+kicad (7.0.9+dfsg-1) unstable; urgency=medium
+
+  * [2daca8b] New upstream version 7.0.9+dfsg
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 16 Nov 2023 20:22:14 +0100
+
+kicad (7.0.8+dfsg-1) unstable; urgency=medium
+
+  * [139e7f5] New upstream version 7.0.8+dfsg
+  * [b5ed954] Rebuild patch queue from patch-queue branch
+    + Just refreshed existing patches.
+  * [0572553] d/control: Bump kicad-* versions to >= 7.0.0~
+    (Closes: #1050882)
+  * [195174f] d/kicad.lintian-overrides: Small adjustment about wTH/wtH
+  * [ba72234] d/kicad.lintian-overrides: be more lazy on arch paths
+  * [7ee9704] d/copyright: File common/lockfile.cpp was removed
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 08 Oct 2023 10:54:42 +0200
+
+kicad (7.0.7+dfsg-1) unstable; urgency=medium
+
+  * [5ab605a] New upstream version 7.0.7+dfsg
+  * [3a7f4d5] Rebuild patch queue from patch-queue branch
+    + added patch:
+      debian-hacks/KiCadFullVersion-Drop-hyphen-in-the-string.patch
+    + dropped patch (applied upstream):
+      fixes/Fix-dblatex-options-within-cmake-file.patch
+    + modified/renamed patch:
+      reproducibility/add-field-revdate-to-asciidoc-files-of-documentation.patchi
+      -> debian/patches/reproducibility/doc-Add-field-revdate-to-asciidoc-files.patch
+  * [b4306e8] d/rules: Add KICAD_VERSION_EXTRA to DEB_KICAD_CMAKE_OPTS
+    Use the option to set a suffix to the by CMake provided version string
+    through a configure option, by this we don't need to modify source code
+    file before start the package build. This would break calling
+    dpkg-buildpackage twice as dpkg-source will detect modification within
+    the source if called after the first build.
+  * [e571530] d/rules: Add target override_dh_clean
+    Clean out debian/build if exists, would also break dpkg-source.
+    (Closes: #1047477)
+  * [ff93a8a] d/rules: Resize the icon in the package data
+    Do not modify the XPM based icon within the source, same again, dpkg-source
+    will detect modified source then.
+  * [81bb2e8] d/rules: Don't modify Asciidoc files for now
+    Adding a unique timestamp to the Asciidoc files will need more effort,
+    the build isn't reproducible anyway, so drop that modification while build
+    for now.
+  * [1bc5733] d/rules: Drop non existing options from DEB_KICAD_CMAKE_OPTS
+    Some of previous used and needed CMake options are now no longer
+    provided or required any longer.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Wed, 16 Aug 2023 17:25:09 +0200
+
+kicad (7.0.6+dfsg-1) unstable; urgency=medium
+
+  * [6fce285] New upstream version 7.0.6+dfsg
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 09 Jul 2023 08:35:31 +0200
+
+kicad (7.0.5+dfsg-2) unstable; urgency=medium
+
+  * Upload to unstable
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Mon, 12 Jun 2023 17:51:34 +0200
+
+kicad (7.0.5+dfsg-1) experimental; urgency=medium
+
+  * [6d70960] New upstream version 7.0.5+dfsg
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Wed, 31 May 2023 07:55:56 +0200
+
+kicad (7.0.3+dfsg-1) experimental; urgency=medium
+
+  * [8a432b5] New upstream version 7.0.3+dfsg
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 14 May 2023 08:48:02 +0200
+
+kicad (7.0.2+dfsg-1) experimental; urgency=medium
+
+  * [dbbb7ab] New upstream version 7.0.2+dfsg
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Tue, 18 Apr 2023 19:13:34 +0200
+
+kicad (7.0.1+dfsg-1) experimental; urgency=medium
+
+  * [1632fc8] d/t/control: Remove not used package from Depends
+    (Closes: #1018386)
+  * [4e67a4b] d/gbp.conf: Exclude thirdparty/sentry-native on import
+  * [01c253a] New upstream version 7.0.1+dfsg
+    (Closes: #1031345)
+  * [71f9595] d/control: Add new required B-D on unixodbc-dev
+  * [32e4562] d/rules: Adjust targets due changed upstream source
+  * [c074c04] d/kicad.install.in: Adjustments due changes by upstream
+  * []861d40] d/copyright: Updating due upstream modifications
+  * [5421020] d/kicad.lintian-overrides: Update entries due changes
+  * [d2d2e6c] Lintian: Add overrides for the source
+  * [4143571] d/README.vendorded-stuff: Some notes about vendored stuff
+  * [64481a3] d/control: Bump suggested/recommended versions to >= 7.0.1~
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 12 Mar 2023 17:40:58 +0100
+
+kicad (6.0.11+dfsg-1) unstable; urgency=medium
+
+  * [f3f2ba1] New upstream version 6.0.11+dfsg
+  * [a9cd33d] d/copyright: Update year data
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 26 Jan 2023 06:35:43 +0100
+
+kicad (6.0.10+dfsg-2) unstable; urgency=medium
+
+  * [5a3af46] Revert "d/rules: Turn option KICAD_USE_EGL on"
+    wxWidgets 3.2 in Debian has now no EGL canvas support compiled in any
+    more. More to the reasoning about the switch back can be found on
+    https://bugs.debian.org/1020640
+    https://bugs.debian.org/1024147
+    (Closes: #1027137)
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 29 Dec 2022 18:43:50 +0100
+
+kicad (6.0.10+dfsg-1) unstable; urgency=medium
+
+  [ Manuel A. Fernandez Montecelo ]
+  * [789343b] d/control: Add riscv64 to supported architectures
+    (Closes: #1025032)
+
+  [ Carsten Schoenert ]
+  * [96d4c35] New upstream version 6.0.10+dfsg
+  * [66457b6] d/control: Increase Standards-Version to 4.6.2
+    + No further changes needed.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Tue, 20 Dec 2022 20:24:32 +0100
+
+kicad (6.0.9+dfsg-1) unstable; urgency=medium
+
+  * [e85c0b0] New upstream version 6.0.9+dfsg
+  * [7e86aff] Rebuild patch queue from patch-queue branch
+    + modified patch:
+      reproducibility/add-field-revdate-to-asciidoc-files-of-documentation.patch
+  * [8403644] d/rules: Adjust file list in ASCIIDOCFILES
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 29 Oct 2022 13:54:45 +0200
+
+kicad (6.0.8+dfsg-1) unstable; urgency=medium
+
+  * [3f92c9a] New upstream version 6.0.8+dfsg
+  * [29b0004] d/copyright: Updating due upstream modifications
+  * [3746b07] Rebuild patch queue from patch-queue branch
+    + modified patch:
+      reproducibility/add-field-revdate-to-asciidoc-files-of-documentation.patch
+  * [bc8a6bc] d/rules: Adjust file list in ASCIIDOCFILES
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 06 Oct 2022 17:10:36 +0200
+
+kicad (6.0.7+dfsg-3) unstable; urgency=medium
+
+  * [78fe67e] d/control: Pin min python3-wxgtk4.0 version
+    By this version requirement kicad will pull python3-wxgtk4.0 with
+    version 4.2.0+dfsg-1~ or greater. This isn't really fixing the
+    referenced bug report, the authors of plugins for KiCad really need to
+    do some version checking of the environment and not blindly assume that
+    every required package is available in the correct version!
+    (Closes: #1019954)
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 17 Sep 2022 18:09:00 +0200
+
+kicad (6.0.7+dfsg-2) unstable; urgency=medium
+
+  * [ddaeec5] d/t/control: Remove not used package from Depends
+    (Closes: #1018386)
+  * [0cbd959] d/control: Move over to use wxwidgets3.2
+    (Closes: #1019788)
+  * [a217cbb] d/rules: Turn option KICAD_USE_EGL on
+  * [8bbcedb] d/kicad.lintian-overrides: Update entries to new syntax
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 17 Sep 2022 09:27:29 +0200
+
+kicad (6.0.7+dfsg-1) unstable; urgency=medium
+
+  * [d4ef5ac] New upstream version 6.0.7+dfsg
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 30 Jul 2022 12:22:50 +0200
+
+kicad (6.0.6+dfsg-1) unstable; urgency=medium
+
+  * [67d4f3c] New upstream version 6.0.6+dfsg
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Mon, 20 Jun 2022 20:00:05 +0200
+
+kicad (6.0.5+dfsg-1) unstable; urgency=medium
+
+  * [5517201] New upstream version 6.0.5+dfsg
+  * [883c6f9] d/control: increase Standards-Version to 4.6.1
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 19 May 2022 17:05:13 +0200
+
+kicad (6.0.4+dfsg-1) unstable; urgency=medium
+
+  * [5ca14e6] New upstream version 6.0.4+dfsg
+  * [370446a] d/copyright: Update due updated upstream modifications
+  * [e7c121e] d/k-packages-relations.dia: Remove transitional package
+  * [1418856] Rebuild patch queue from patch-queue branch
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 20 Mar 2022 07:53:12 +0100
+
+kicad (6.0.2+dfsg-1) unstable; urgency=medium
+
+  * [5e64c37] New upstream version 6.0.2+dfsg
+  * [iec7346] d/control: Adjust Vcs-Browser field
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 12 Feb 2022 10:36:02 +0100
+
+kicad (6.0.1+dfsg-1) unstable; urgency=medium
+
+  [ Simon Richter ]
+  * [376e8c6] d/rules: Generate bpo friendly version dependencies
+    (Closes: #1003232)
+
+  [ Carsten Schoenert ]
+  * [bb95051] New upstream version 6.0.1+dfsg
+  * [d9c5702] Rebuild patch queue from patch-queue branch
+  * [52fd7fd] Adding ldconfig triggering file
+  * [ec04bf7] d/kicad.lintian-overrides: Ignore no-shlibs warning
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 15 Jan 2022 16:08:27 +0100
+
+kicad (6.0.0+dfsg1-2) unstable; urgency=medium
+
+  * [215faf4] d/control: Use libpython3-dev instead libpython3-all-dev
+    + Don't use libpython3-all-dev within the Duild-Depends, use
+      libpython3-dev to get the current pkgconfig data for Python.
+    (Closes: #1003043)
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Mon, 03 Jan 2022 21:32:23 +0100
+
+kicad (6.0.0+dfsg1-1) unstable; urgency=medium
+
+  * Upload to unstable
+  * [5fc81d7] New upstream version 6.0.0+dfsg1
+    (Closes: #916461)
+  * [4fbf1ac] d/control: Ensure old kicad libraries will get removed
+  * [8b402af] d/README.Debian: Important version 6 information
+  * [57bcf6d] d/kicad.NEWS: Keep user notified about version 6
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 02 Jan 2022 15:20:04 +0100
+
+kicad (6.0.0~rc2+dfsg1-2) experimental; urgency=medium
+
+  * [78bd51c] d/control: Enable architecture powerpc and ppc64 (again)
+    + Support for both platforms were added upstream several months ago.
+    (Closes: #1002629)
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 30 Dec 2021 11:34:57 +0100
+
+kicad (6.0.0~rc2+dfsg1-1) experimental; urgency=medium
+
+  * [554a963] d/kicad.lintian-overrides: Update tag name due renaming
+    + The previous used lintian tag 'binary-without-manpage' was renamned to
+      'no-manual-page'.
+  * [8baf23a] d/gbp.conf: Ignore the upstream GitLab CI pipeline
+    + Filter out any files named '.gitlab-ci.yml' that would trigger pipelines
+      on Salsa thta can't work.
+  * [1153d7b] New upstream version 6.0.0~rc2+dfsg1
+  * [27b86ce] d/kicad.lintian-overrides: Update tag name due renaming
+    + One more tag that was renamed, 'non-dev-pkg-with-shlib-symlink' is now
+      called 'link-to-shared-library-in-wrong-package'.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 19 Dec 2021 09:48:18 +0100
+
+kicad (6.0.0~rc1+dfsg1-1~exp1) experimental; urgency=medium
+
+  * [bd7a6c0] New upstream version 6.0.0~rc1+dfsg1
+  * [384907f] d/kicad.install.in: Install also new schemas related data
+    + The plugin and content manager (PCM) feature uses the folder
+      /usr/share/kicad/schemas to provide JSON files to configure this new
+      option.
+  * [ac0ba22] d/copyright: Update due updated upstream modifications
+  * [03246e0] d/control: Use branch debian/experimental in Vcs-*
+  * [070b8c9] d/*: Exchange various old homepage references for kicad-pcb.org
+    (Closes: #997958)
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 20 Nov 2021 20:15:37 +0100
+
+kicad (6.0.0~20211007.57c7d66+dfsg1-1) experimental; urgency=medium
+
+  * [5f82e7b] New upstream version 6.0.0~20211007.57c7d66+dfsg1
+    + Use a snapshot version from 2021-10-07 as upstream version.
+  * [2182525] Rebuild patch queue from patch-queue branch
+    + renamed and modified patch:
+      fixes/Modifying-the-Exec-cmd-in-the-desktop-files.patch
+      -> debian/patches/fixes/Adjusting-content-in-the-desktop-files.patch
+    + removed patch (fixed upstream):
+      fixes/Appdata-Add-missing-desktop-entry.patch
+  * [0592d41] d/control: increase Standards-Version to 4.6.0
+    + No further changes needed.
+  * [1981eb7] d/copyright: Updating due upstream modifications
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 07 Oct 2021 08:35:02 +0200
+
+kicad (6.0.0~20210815.4852177+dfsg1-1) experimental; urgency=medium
+
+  * [6e326b0] New upstream version 6.0.0~20210815.4852177+dfsg1
+    + Use a snapshot version from 2021-08-15 as upstream version.
+  * [3fb49dc] rebuild patch queue from patch-queue branch
+    + modified patch:
+      fixes/Modifying-the-Exec-cmd-in-the-desktop-files.patch
+  * [2876609] d/copyright: Update due updated upstream modifications
+  * [ebed16f] d/u/metadata: Add basic metadata information
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 15 Aug 2021 11:16:53 +0200
+
+kicad (6.0.0~20210702.eff75b6+dfsg1-1) experimental; urgency=medium
+
+  * [2b65b01] New upstream version 6.0.0~20210702.eff75b6+dfsg1
+    + Use a snapshot version from 2021-07-02 as upstream version.
+  * [7d8d08d] d/copyright: Update due updated upstream modifications
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Fri, 02 Jul 2021 13:38:53 +0200
+
+kicad (6.0.0~20210602.6919d12+dfsg1-1) experimental; urgency=medium
+
+  * [cfea635] New upstream version 6.0.0~20210602.6919d12+dfsg1
+    + Use a snapshot version from 2021-06-02 as upstream version.
+  * [79ac6ab] rebuild patch queue from patch-queue branch
+    + modified patches:
+      reproducibility/add-field-revdate-to-asciidoc-files-of-documentation.patch
+  * [95156f3] d/rules: Remove non existing *.adoc file ASCIIDOCFILES
+    + Related to the needed adjustment of the patch queue there is also a
+      change to the list of *.adoc files needed we modify before starting the
+      build of documentation. It's simply a removal of a now non existing file.
+  * [31f0b0e] d/control: Switch to asciidoctor within Build-Depends
+    + Upstream has moved over to asciidoctor instead of using asciidoc.
+  * [6d13ce7] d/rules: Only create HTML documentation for now
+    + Within the switch to asciidoctor upstream has also changed the way the
+      PDF files are created, it's based on the NPM package asciidoctor-pdf
+      (https://www.npmjs.com/package/asciidoctor-pdf) which isn't packaged
+      in Debian. The remaining options of using dblatex or fop are
+      unfortunately broken right now.
+  * [2c5d1a3] d/kicad.{install.in,links} Adding new file
+    + Adding the newly created file usr/bin/_kipython.kiface to the kicad
+      binary package.
+  * [6ef4b09] d/copyright: Update due updated upstream modifications
+  * [edc4118] doc-base: Remove references to PDF files
+    + Remove any PDF references within the doc-base definitions, we don't
+      build any PDF based documentation currently.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 03 Jun 2021 11:45:42 +0200
+
+kicad (6.0.0~20210502.6b9e44e+dfsg1-1) experimental; urgency=medium
+
+  * [ba72b1d] New upstream version 6.0.0~20210502.6b9e44e+dfsg1
+    + New snapshot version from 2021-05-02 as upstream version.
+  * [a6fa3d0] rebuild patch queue from patch-queue branch
+    + modified patches:
+      fixes/Appdata-Add-missing-desktop-entry.patch
+      fixes/Modifying-the-Exec-cmd-in-the-desktop-files.patch
+  * [7a20d3f] d/kicad.install.in: Adjust install of kicad.metainfo.xml
+    + The metainfo file is now installed by upstream into the correct folder,
+      no need to move the file between folders.
+  * [8a5a77b] d/copyright: Update of org.kicad.kicad.metainfo.xml.in
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 02 May 2021 18:04:25 +0200
+
+kicad (6.0.0~20210410.4c9f7c4+dfsg1-1) experimental; urgency=medium
+
+  * [618900e] d/gbp.conf: remove component i18n
+    + The UI localization for KiCad was handled previously as a dedicated
+      component tarball. Starting with version 5.99.0 the i18n stuff is now
+      included within the main tarball, thus we don't need to work with a
+      component tarball any more.
+  * [b85bbb5] New upstream version 6.0.0~20210410.4c9f7c4+dfsg1
+    + Use a snapshot version from 2021-04-10 as upstream version.
+  * [594960a] rebuild patch queue from patch-queue branch
+    + modified patches:
+      fixes/Appdata-Add-missing-desktop-entry.patch
+    + modified and renamed patch:
+      fixes/Modifing-the-Exec-cmd-in-the-desktop-files.patch -->
+      fixes/Modifying-the-Exec-cmd-in-the-desktop-files.patch
+    + removed patch:
+      fixes/spelling-fix-allows-to-allows-one-to.patch
+  * [bbd8bfb] d/rules: Remove CMake option for GitHub Plugin
+    + The integration of managing GitHub repositories as symbols or
+      footprints has been removed. So removing the old cmake config option
+      accordingly.
+  * [592d791] d/rules: Set build of i18n and demos explicitly on
+    + Even if this option is set default to on, this can change due decisions
+      by upstream. We always want to build and install the i18n things, so
+      being better explicit on this.
+  * [3c63d5e] d/rules: Install i18n files into useful folder
+    + The cmake configuration doesn't set the FHS conform installation folder
+      for the compiled i18n message catalogs so we need to set this option.
+  * [34a11a0] d/rules: Be more explicit while modify the version string
+    + We want to use the Debian version within the version information instead
+      of a upstream combined version string. The configuration variable to
+      inject the version into the UI has been modified so we need to adjust
+      our version replacement.
+  * [e61b38c] d/rules: Remove old i18n build and install stuff
+    + Due the now included i18n stuff inside the source of KiCad we can drop
+      all previously dedicated added build instructions inside debian/rules.
+  * [ab91cba] d/control: Adding new required packages for the build
+    + The build requires now the packages 'libgtk-3-dev' and
+      'libpython3-all-dev' to be around.
+  * [1a1af8e] d/control: Increase required kicad version >= 6.0.0~
+    + Increase the depending and suggested version for kicad and additional
+      kicad-* packages to at least 6.0.0~.
+  * [ac9f8fc] d/kicad-demos.install: Adjust files to install
+    + Reflect the now added demo project 'stickhub' and changed file extension
+      for project files in the kicad-demos package.
+  * [3d81ce1] d/kicad.install.in: Adding new additional folder to install
+    + All used icons within the UI are taken now from a file 'images.tar.gz'
+      at runtime, adding the installation of the folder for that file.
+  * [3d366fc] d/rules: Remove any *.md files from installed demos folder
+  * [57ec31c] d/copyright: Update due updated upstream modifications
+    + Updating the copyright information as the source structure has been
+      changed for various parts of the source code and contributors.
+  * [a12125e0] d/kicad.lintian-overrides: Remove entries not needed any more
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 10 Apr 2021 15:31:39 +0200
+
+kicad (5.99.0+really5.1.12+dfsg1-1) unstable; urgency=medium
+
+  * [f955904] New upstream version 5.99.0+really5.1.12+dfsg1
+  * [bce8381] d/control: Point to branch debian/sid in field Vcs-Git
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Fri, 05 Nov 2021 19:28:47 +0100
+
+kicad (5.99.0+really5.1.11+dfsg1-1) unstable; urgency=medium
+
+  * [ca676b1] d/*: Exchange various old homepage references for kicad-pcb.org
+    (Closes: #997958)
+  * [8e0e28a] d/gbp.conf: Ignore the upstream GitLab CI pipeline
+  * [a765de2] New upstream version 5.99.0+really5.1.11+dfsg1
+  * [37e3c18] d/control: Increase Standards-Version to 4.6.0
+  * [a54b3d1] d/copyright: Update information due release of 5.1.11
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 31 Oct 2021 19:38:59 +0100
+
+kicad (5.99.0+really5.1.10+dfsg1-1) unstable; urgency=medium
+
+  * [f3299a5] New upstream version 5.99.0+really5.1.10+dfsg1
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Tue, 27 Apr 2021 21:34:34 +0200
+
+kicad (5.99.0+really5.1.9+dfsg1-1) unstable; urgency=medium
+
+  * [8ba5d7b] New upstream version 5.99.0+really5.1.9+dfsg1
+    + Due some inglorious mistake by me I mixed up the upload that was
+      targeted to experimental but unfortunately was made into unstable.
+      To keep the version in unstable based on the current upstream stable
+      version series this new upload is needed.
+      As the version for the new upload needs to be greater than the previous
+      one and I wanted to not use a epoch finally the suffix 'really5.1.9' is
+      used to show that this version is *really* the previous old version 5.1.9!
+      That suffix will get removed once we have reached some 6.x.x version.
+      (Closes: #986455)
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 10 Apr 2021 07:46:05 +0200
+
+kicad (5.1.9+dfsg1-1) unstable; urgency=medium
+
+  * [0802fbc] d/watch: update watch file to capture GitLab source
+  * [d7cfe17] d/control: increase Standards-Version to 4.5.1
+    + No further changes needed.
+  * [913659b] New upstream version 5.1.9+dfsg1
+  * [35f735f] rebuild patch queue from patch-queue branch
+    + modified patches:
+      fixes/Modifing-the-Exec-cmd-in-the-desktop-files.patch
+  * [78d671c] d/copyright: small update due removed folder
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Wed, 23 Dec 2020 19:51:45 +0100
+
+kicad (5.1.8+dfsg1-1) unstable; urgency=medium
+
+  * [56accba] New upstream version 5.1.8+dfsg1
+  * [118ef3c] rebuild patch queue from patch-queue branch
+    + added patch:
+     fixes/Appdata-Add-missing-desktop-entry.patch
+  * [01f080b] kicad-demos.install: split of installation
+    + Install the shape1.txt file from kicad-demos into
+      /usr/share/doc/kicad-demos.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 31 Oct 2020 12:58:23 +0100
+
+kicad (5.1.7+dfsg1-1) unstable; urgency=medium
+
+  * [7e58f43] New upstream version 5.1.7+dfsg1
+  * [07e89fe] autopkg: mark current test superficial
+    + The current only used autopkgtest is simply trying to import the Python3
+      module of kicad but is nothing doing anything further. This ensures we
+      can load the module, but at all it is just a superficial check.
+  * [f4a9cf3] d/kicad.install.in: remove no longer available file
+    + kicad-ogltest isn't built any more and so we can't install this any
+      longer.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 27 Sep 2020 10:36:57 +0200
+
+kicad (5.1.6+dfsg1-1) unstable; urgency=medium
+
+  * [9b510bb] d/control: Remove transitional package kicad-common
+    + kicad-common is replaced by kicad-libraries, the transition of these
+      two packages was done within the Debian buster release. We can drop now
+      the old -common package for real.
+  * [fdd52e9] d/copyright: update upstream source for KiCad app
+    + Some source code resources of the KiCad project have been changed since
+      the project has moved to GitLab, update the information within the
+      copyright file.
+  * [a77b08e] d/copyright: update years on contributors
+    + The annual update for various parts of the source code and contributors.
+  * [b98cb97] dh: move to dh-compat 13
+    + Increasing the debhelper version to 13 as this is the most recent
+      version.
+  * [a300c96] New upstream version 5.1.6+dfsg1
+  * [2aed90b] d/control: adding Rules-Requires-Root to source section
+  * [d2e5861] d/rules: More split off into arch/indep targets
+    + Moving to dh 13 requires more separation of the -arch and -indep targets.
+      dh_missing is now also more picky about files that are installed by the
+      upstream build system but not into one of the binary packages.
+      Due the ongoing Python2 removal in bulleseye we currently don't want to
+      install the files
+       usr/share/doc/kicad/scripts/lib_convert.py
+       usr/share/doc/kicad/scripts/test_plugin.py
+       usr/share/doc/kicad/scripts/test_kicad_plugin.py
+       usr/share/doc/kicad/scripts/ddr3_length_match.py
+      as these are not Python3 ready.
+  * [49139de] d/watch: Adjust used resource onto GitLab
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Wed, 13 May 2020 20:41:22 +0200
+
+kicad (5.1.6~rc1+dfsg1-1) unstable; urgency=medium
+
+  * [1e1aecc] New upstream version 5.1.6~rc1+dfsg1
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Fri, 17 Apr 2020 22:14:53 +0200
+
+kicad (5.1.6~20200411+dfsg1-1) experimental; urgency=medium
+
+  * [7f9e64d] New upstream version 5.1.6~20200411+dfsg1
+    + Snapshot from 11th April 2020 from the KiCad 5.1 branch from
+      commit ID 305ed0b.
+  * [b80db87] rebuild patch queue from patch-queue branch
+    + removed patch
+      debian-hacks/Removing-hyphen-inside-KICAD_FULL_VERSION.patch
+  * [7eae5b3] d/control: increase Standards-Version to 4.5.0
+    + No further changes needed.
+  * [5e454a1] d/control: update upstream URL to use https
+    + The project homepage is now also available by https.
+  * [f3a592d] d/rules: substitute KICAD_VERSION with DEB_VERSION
+    + Upstream is using a mechanism that allows one to append some extra
+      string onto the given string KICAD_VERSION. But this is not allowing any
+      modification of KICAD_VERSION itself. This makes it impossible to place
+      a given full Debian version into the application in case we don't build
+      on top of a tagged upstream version. Like here for this snapshot release.
+      Stop using EXTRA_VERSION and replace KICAD_VERSION right before the
+      build.
+  * [51c07e3] d/copyright: small update due renamed file
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 11 Apr 2020 12:09:16 +0200
+
+kicad (5.1.5+dfsg1-2) unstable; urgency=medium
+
+  * [c57214d] build against upstream Opencasacde (OCC) libraries
+    + Libraries from the Open CASCADE Technology company are more up to date
+      than the previously used libraries from the Community edition (OCE).
+      By the newer libraries versions KiCad is participating from more and
+      better 3D functionalities.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 21 Nov 2019 16:50:13 +0100
+
+kicad (5.1.5+dfsg1-1) unstable; urgency=medium
+
+  [ Ian McInerney ]
+  * [b41c0a7] kicad: Pass NDEBUG into CXXFLAGS to disable assertions
+
+  [ Carsten Schoenert ]
+  * [84057fa] d/control: remove libboost-context-dev from B-D
+     + This B-D isn't needed anymore as upstream has added the relevant
+       source code parts locally. By this we can build the KiCad packages
+       also on mips64el again.
+    (Closes: #943590)
+  * [204c6f3] Revert "d/control: adding clang to Build-Depends"
+    + Clang isn't performing well on mips*. Especially the linker on
+      mips64el is failing.
+  * [a8aa287] Revert "d/rules: setting the clang compiler explicitly"
+    + Using again the default values for DCMAKE_C{,XX}_COMPILER, means let
+      the cmake configure run detect the compiler.
+  * [7451345] d/control: increase B-D version on libglm-dev to 0.9.9.6-1
+     + As we want to use GCC as compiler again we need GLM in version
+       0.9.9.6 or greater.
+  * [be77337] d/control: add misp64el as build arch again
+    + By dropping the B-D on libboost-context-dev we can now enable again
+      the architecture mips64el as supported platform again.
+  * [c28fd9d] Python2 removal: drop B-D libpython-stdlib
+    + This removes the last outstanding direct B-D on Python2.
+    (Closes: 936792)
+  * [468259c] New upstream version 5.1.5+dfsg1
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Mon, 18 Nov 2019 06:52:48 +0100
+
+kicad (5.1.4+dfsg1-2) unstable; urgency=medium
+
+  [ Eugene Kilachkoff ]
+  * [d509c04] kicad: correct Python wxgtk dependency
+    + Since the move over to build and link kicad against wxpython4 / Phoenix
+      we didn't have updated the dependency on wxpython4 for the kicad binary.
+
+  [ Carsten Schoenert ]
+  * [ef511df] d/control: increase Standards-Version to 4.4.1
+    + No further changes needed.
+  * [c9e9e6b] dh: move over to debhelper-compat
+  * [616e4e1] kicad: install one more file
+    + Install also the new builded file kicad-ogltest.
+  * [406bcb9] Lintian: update entries for package kicad
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 12 Oct 2019 17:49:59 +0200
+
+kicad (5.1.4+dfsg1-1) unstable; urgency=medium
+
+  * [efe5b4e] d/copyright: correct reference on GPL-2
+  * [37450d5] New upstream version 5.1.4+dfsg1
+  * [7ee10e2] rebuild patch queue from patch-queue branch
+    + removed patch:
+      fixes/Workaround-failing-Eeschema-Chinese-PDF-generation.patch
+  * [512a248] kicad.lintian-overrides: small update on the overrides
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Fri, 09 Aug 2019 17:17:33 +0200
+
+kicad (5.1.3+dfsg1-2) unstable; urgency=medium
+
+  * [0067eec] d/copyright: update due also new files / folder
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 01 Aug 2019 19:20:42 +0200
+
+kicad (5.1.3+dfsg1-1) unstable; urgency=medium
+
+  * [eeaa4f0] d/control: fix language in long desc for kicad-doc-id
+     (Closes: #929688)
+  * [45c1c57] d/control: re-add architecture ppc64el
+     (Closes: #923713)
+  * [9832569] d/control: increase Standards-Version to 4.4.0
+    + No further changes needed.
+  * [c175651] New upstream version 5.1.3+dfsg1
+     (Closes: #926577, #927328, #931258)
+  * [bbcd6cc] rebuild patch queue from patch-queue branch
+    + added patch:
+      fixes/Workaround-failing-Eeschema-Chinese-PDF-generation.patch
+  * [274cdff] d/copyright: small update due removed file
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 28 Jul 2019 19:23:17 -0300
+
+kicad (5.1.2+dfsg1-1) unstable; urgency=medium
+
+  * [7bb2a89] d/copyright: correct the license for kicad.appstream.xml
+  * [ccda3ca] New upstream version 5.1.2+dfsg1
+  * [fd774f7] rebuild patch queue from patch-queue branch
+    + added patch:
+      fixes/Fix-dblatex-options-within-cmake-file.patch
+    + removed patch (already included upstream):
+      debian-hacks/Update-Japanese-translation-700.patch
+  * [00e79ae] Revert "kicad-doc: split docu build into two runs"
+    + We can revert the modification for building the documentation which
+      was added for version 5.1.0+dfsg1-1 because the added patch for fixing
+      the dblatex options solves the build issues.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Mon, 29 Apr 2019 21:21:44 +0200
+
+kicad (5.1.0+dfsg1-1) unstable; urgency=medium
+
+  * [f91d5c6] New upstream version 5.1.0+dfsg1
+  * [cf6caf7] d/kicad-doc-en.doc-base: add new installed file
+  * [3b2adfc] d/control: adjust kicad-doc-en description
+  * [021773c] d/kicad-doc-it.doc-base: add new installed file
+  * [0f3a4f6] d/control: adjust kicad-doc-it description
+  * [9d673f9] d/kicad-doc-ru.doc-base: add new installed file
+  * [e3dfd86] d/control: adjust kicad-doc-ru description
+  * [4b89fe1] d/kicad-doc-zh.doc-base: add new installed files
+  * [0a57578] d/control: adjust kicad-doc-zh description
+  * [a25975a] d/copyright: update small misc data
+  * [7db2e8d] rebuild patch queue from patch-queue branch
+    + removed patch (useless due the newly added patch):
+      debian-hacks/Remove-specific-Japanese-translation-within-pcbnew.adoc.patch
+      added patch:
+      debian-hacks/Update-Japanese-translation-700.patch
+  * [33cd8fb] kicad-doc: split docu build into two runs
+    + Work around a broken build of the KiCad documentation which seems to
+      happen otherwise due some internal CMake build configuration issue which
+      mixes the build of the Polish EEschema with the dblatex used XML style
+      sheets which are used for Japanese.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Wed, 20 Mar 2019 21:52:26 +0100
+
+kicad (5.1.0~rc1+20190224+dfsg1-1) experimental; urgency=medium
+
+  * [9753ede] New upstream version 5.1.0~rc1+20190224+dfsg1
+    + Snapshot from 24th February 2019 from the KiCad master branch from
+      commit ID 30612ca.
+  * [b10b8f4] d/kicad-doc-zh.doc-base: add new installed files
+    + Documentation for Chinese now includes files for EEschema and Getting
+      started in KiCad (GSiK).
+  * [7458dc7] d/control: adjust kicad-doc-zh description
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 24 Feb 2019 10:49:13 +0100
+
+kicad (5.1~rc1+dfsg1-1) experimental; urgency=medium
+
+  * [bb3b42f] New upstream version 5.1~rc1+dfsg1
+    (Closes: #921259)
+  * [ad86f08] d/control: adding clang to Build-Depends
+  * [86ed0bc] d/rules: setting the clang compiler explicitly
+    + Due the version 0.9.9.3 of GLM we can't use GCC for building the source
+      and need to switch over to CLang. This happen because of some different
+      interpreted C++11 Standards between GCC and CLang in GLM.
+  * [fed316f] d/copyright: small update to the copyright file
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 09 Feb 2019 09:11:10 +0100
+
+kicad (5.1~20190127.4fc692f+dfsg1-1) experimental; urgency=medium
+
+  * [a2ab50a] New upstream version 5.1~20190127.4fc692f+dfsg1
+    + Snapshot from 27th January 2019 from the KiCad master branch from
+      commit ID 4fc692f.
+  * [b50c400] d/control: no Dutch documentation will get build any more
+    + The Dutch translation of the KiCad documentation was removed by
+      upstream so removing the respective package in Debian too, the
+      translation wasn't maintenanced in any way.
+  * [cbeecae] d/copyright: small update to the copyright file
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 27 Jan 2019 11:32:57 +0100
+
+kicad (5.1~20190114.a0a4e5e+dfsg1-1) experimental; urgency=medium
+
+  * [597c5e5] d/gbp.conf: adjust to debian/experimental
+    + Update configuration for git-buildpackage so it acts on the correct
+      folders and branches.
+  * [7f68717] New upstream version 5.1~20190114.a0a4e5e+dfsg1
+    + Snapshot from 14th January 2019 from the KiCad master branch from
+      commit ID a0a4e5e.
+  * [654f720] rebuild patch queue from patch-queue branch
+    + removed patch (applied upstream)
+      fixes/Add-German-translations-entries-to-appdata.xml.patch
+    + added patch:
+      fixes/spelling-fix-allows-to-allows-one-to.patch
+  * [ab28ad4] d/rules: (re)enable SCRIPTING_WXPYTHON{,-PHOENIX}
+    + Turn on again the compile option for SCRIPTING_WXPYTHON and also adding
+      an new option for SCRIPTING_WXPYTHON_PHOENIX so the build will use
+      wxpython4.0 functions.
+  * [e86dd61] d/rules: use Python3 for scripting interface
+    + Switch on the option for using Python3 mostly everywhere inside KiCad.
+  * [9e3dbd0] d/rules: prefer OCE over OCC for OpenCASCADE support
+    + Due changes within the build environment of KiCad we need to use this
+      compile option explicitly now for using OCE.
+  * [ecaa9ca] d/control: updating B-D for upcoming version 5.1
+    + As the usage and move over to GTK+3 backend is a main goal for Kicad 5.1
+      we need to switch some build dependencies like the GTK+3 version of
+      libwxgtk3.0 and wxgtk (aka wxpython4 / Phoenix). Also we need the
+      Python3 version of some packages.
+  * [f1988cd] d/rules: needed updates due move over to Python3
+    + For handling Python3 package build and installation uses dh_python3 now.
+  * [c590ec8] d/control: adjust ${python:Depends} -> ${python3:Depends}
+    + The binary package kicad includes now Python3 based files and folders so
+      we need to use ${python3:Depends} in the Depends field accordingly.
+  * [ee3db40] kicad: more minor adjustments due Python3 usage
+    + Update of the install sequencer file for the kicad package due Python3
+      files and folders now.
+  * [c9bba13] README.Debian: remove part about GTK+3 restrictions
+    + Starting with this version KiCad does not have any GTK+3 related
+      restrictions any more and we can remove this old information.
+  * [6c773b4] copyright: adopt upstream changes
+    + Update copyright information due changes within the source files.
+  * [f3d1db7] d/control: increase Standards-Version to 4.3.0
+    + No further changes needed.
+  * [d6ac004] README.source: update information
+    + Also update the information about generating the tarballs and the import
+      of them.
+  * [eac00f1] remove helper scripts no longer used or needed
+    + Remove older helper script which aren't used for a long time and never
+      will be.
+  * [86eeabd] kicad.lintian-overrides: one more entry for 'Busses'
+    + Ignore the word 'Busses' which is used in a test file.
+  * [bf2a58a] autopkgtest: update test due Python3 change
+    + Now we use Python 3 mostly everywhere. ;)
+  * [2d8d4ec] kicad: (re)adding versioned Depends for python-wxgtk3.0
+    + Due the re enabled wxPython based scripting interface we need to add
+      again the package python-wxgtk3.0 as an dependency.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Mon, 14 Jan 2019 16:34:23 +0100
+
+kicad (5.0.2+dfsg1-1) unstable; urgency=medium
+
+  * [9272615] New upstream version 5.0.2+dfsg1
+    (Closes: #911559)
+  * [967dbe4] rebuild patch queue from patch-queue branch
+    + removed patch (included upstream):
+      fixes/Use-fixed-version-for-libngspice.so.0.patch
+    + updated patch:
+      fixes/Add-German-translations-entries-to-appdata.xml.patch
+  * [3876be2] kicad: remove package python-wxgtk3.0 from Depends
+    + Remove useless dependency on python-wxgtk3.0, KiCad is build without
+      wxPython Scripting support and thus we don't need this package
+      installed.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 16 Dec 2018 09:01:15 +0100
+
+kicad (5.0.1+dfsg1-3) unstable; urgency=medium
+
+  * [7a56565] rebuild patch queue from patch-queue branch
+    + added patch:
+      fixes/Use-fixed-version-for-libngspice.so.0.patch
+  * [122f38b] d/control: adding dependency on libngspice0 library
+    (Closes: #911965)
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 27 Oct 2018 09:19:43 +0200
+
+kicad (5.0.1+dfsg1-2) unstable; urgency=medium
+
+  * [736b230] circuit simulation: enable ngspice based schematic simulation
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 14 Oct 2018 11:35:57 +0200
+
+kicad (5.0.1+dfsg1-1) unstable; urgency=medium
+
+  [ Aurelien Jarno ]
+  * [281d1ac] d/kicad.install.in: add kicad2step (Closes: #909136)
+
+  [ Carsten Schoenert ]
+  * [62e6675] New upstream version 5.0.1+dfsg1
+    (Closes: #909282)
+  * [184212a] rebuild patch queue from patch-queue branch
+    + removed patches (fixed upstream):
+      fixes/Adjust-RTree-default-floating-point-to-use-double.patch
+  * [0204625] d/control: increase Standards-Version to 4.2.1
+    + No further changes needed.
+  * [572f318] d/control: mark kicad-common as Multi-Arch: foreign
+  * [80e5a1d] d/copyright: small adjustment due upstream change
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Fri, 12 Oct 2018 18:46:55 +0200
+
+kicad (5.0.0+dfsg1-2) unstable; urgency=medium
+
+  * [93df210] d/copyright: add info about appdata.xml
+  * [0d2d642] d/kicad.install.in: also install file kicad.appdata.xml
+  * [d93a835] rebuild patch queue from patch-queue branch (Closes: #905221)
+    + added patches:
+      fixes/Add-German-translations-entries-to-appdata.xml.patch
+      fixes/Adjust-RTree-default-floating-point-to-use-double.patch
+    + modified patch:
+      fixes/Modifing-the-Exec-cmd-in-the-desktop-files.patch
+  * [60bb5ea] d/rules: remove the deletion of cvpcb.desktop
+    + This desktop file was added by the patch queue but later deleted by
+      debian/rules. As the patch queue was cleaned on this we don't need the
+      deletion in debian/rules any more.
+  * [d3f7c9d] d/rules: drop libs3d_plugin_oce library from dh_shlibdeps
+    + Due the switch to the OCE suite we need to ensure dh_shlibdeps is also
+      taking account into the library libs3d_plugin_oce while collecting the
+      symbols from the needed libraries. Removing the libraries from the
+      exclusion.
+    (Closes: #905605)
+  * [9e823f6] d/control: mark kicad-libraries as Multi-Arch: foreign
+  * [9f7234e] d/control: increase Standards-Version to 4.2.0
+    + No further changes needed.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Mon, 20 Aug 2018 18:44:29 +0200
+
+kicad (5.0.0+dfsg1-1) unstable; urgency=medium
+
+  * [ebb652c] New upstream version 5.0.0+dfsg1
+    (Closes: #903992)
+  * [92686c6] rebuild patch queue from patch-queue branch
+    + removed patches:
+      fixes/fix-misspelled-Toogle-Toggle.patch
+      fixes/fix-misspelled-allow-to-allow-one-to.patch
+      fixes/fix-misspelled-allows-to-allows-one-to.patch
+      fixes/fix-misspelled-an-other-another.patch
+      All patches are applied upstream.
+  * [bc6a355] Revert "lintian-overrides: ignore some patch queue patches"
+    + The lintian override isn't needed anymore due the changed patch queue.
+  * [e900771] d/control: remove pandoc as B-D
+    + For building the documentation the pandoc package isn't needed anymore.
+  * [c1e20a2] d/README.Debian: extend some more thing for KiCad 5
+    + Adding some more information about the changes which are introduced by
+      the new KiCad major version.
+  * [d74a414] d/kicad.NEWS: adding a NEWS information for kicad
+    + Adding also a NEWS file for the kicad package so user get a more visible
+      announcement about the changes that take also a notable effect on the user
+      side.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Mon, 23 Jul 2018 16:09:57 +0800
+
+kicad (5.0.0~rc3+dfsg1-2) unstable; urgency=medium
+
+  * [2c5ba31] d/control: adjust kicad-doc-de description
+  * [54b0227] d/kicad-doc-de.doc-base: add new installed files
+    + Refresh the entries about the German documentation files within the
+      doc-base sequencer and also within the package description.
+  * [35b0f9b] d/control: adjust kicad-doc-en description
+    + Dito for the English documentation related files.
+  * [aa6d6bb] d/control: adjust kicad-doc-ja description
+  * [b90d73e] d/kicad-doc-ja.doc-base: add new installed files
+    + And also for Japanese.
+  * [8f20697] d/control: adjust kicad-doc-ru description
+  * [a397cf7] d/kicad-doc-ru.doc-base: add new installed files
+    + Also the Russian files did get some updates.
+  * [d8c80e4] Adding entries and dh sequencer for Indonesian docu
+    + The Indonesian documentation got extended and is now re-added.
+  * [6f883c7] Adding entries and dh sequencer for Chinese docu
+    + The Chinese documentation is new and added by this commit.
+  * [e43e930] rebuild patch queue from patch-queue branch
+    + Adding some patches about fixing spelling issues.
+  * [c37d816] lintian-overrides: ignore some patch queue patches
+  * [5fc6dfb] link README-bom.txt from /u/s/d/kicad
+    + The Readme file about the *.txt, *.py and *.xsl files for the plugins
+      is now placed within the /u/s/d/kicad folder but also linked within the
+      plugin folder.
+  * [4fddc71] d/kicad.install.in: fix install of 3d plugin
+    + We dropped the 3D plugin installation by the last upload and 3D models
+      aren't visible by this anymore. Corrected with this commit.
+    (Closes: #903291)
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Mon, 09 Jul 2018 16:46:59 +0200
+
+kicad (5.0.0~rc3+dfsg1-1) unstable; urgency=medium
+
+  * [2500209] debian/watch: catch also RC versions correctly
+    + The watch file didn't detected the RC versions correctly due missed
+      usage of uversionmangle. Also switch to version 4.
+  * [5365fcd] New upstream version 5.0.0~rc3+dfsg1
+  * [1243924] rebuild patch queue from patch-queue branch
+    + removed patch:
+      fixes/Set-ViewBBox-to-viewitem-size.patch
+  * [72acf81] debian/control: adding B-D on texlive-lang-chinese
+    + A basic translation to Chinese is now available from upstream that needs
+      a extension of the Build-Depends field. The created Chinese
+      documentation files will be added in a later version.
+  * [cc1d3ad] debian/control: increase Standards-Version to 4.1.5
+    + No further changes needed.
+  * [59c6649] debian/kicad.install.in: adjust install folders
+    + The content of the plugins folder is now correctly installed into
+      /usr/share/kicad/plugins by upstream, adjust this in the sequencer file.
+  * [458f26d] debian/copyright: small adjustment due upstream change
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 05 Jul 2018 21:24:17 +0200
+
+kicad (5.0.0~rc2+dfsg1-3) unstable; urgency=medium
+
+  * [6a38e45] rebuild patch queue from patch-queue branch
+    + added patch:
+      fixes/Set-ViewBBox-to-viewitem-size.patch
+      Cherry-picked from the current upstream development to fix a segfault
+      that was happen on i386 in the pcbnew application.
+    (Closes: #896706)
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Wed, 06 Jun 2018 20:17:52 +0200
+
+kicad (5.0.0~rc2+dfsg1-2) unstable; urgency=medium
+
+  * rebuild for unstable
+    (Closes: #897100)
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 31 May 2018 07:27:13 +0200
+
+kicad (5.0.0~rc2+dfsg1-1) experimental; urgency=medium
+
+  * [3fedd8b] copyright: explain why we need to add 'dfsg' suffix
+    + From the Debian POV KiCad isn't fully free as upstream is shipping
+      currently two PDF files without the sources. But there won't be ever
+      sources for these files available, the files in question are from
+      UltraCAD Inc. and they never will release the source for rebuilding the
+      PDF files. We have removed the files to comply with the DFSG and this
+      fact is added to the copyright file.
+  * [85fb53b] New upstream version 5.0.0~rc2+dfsg1
+  * [98f1ced] rebuild patch queue from patch-queue branch
+    + added patch:
+      debian-hacks/Remove-specific-Japanese-translation-within-pcbnew.adoc.patches
+    + removed patches (applied upstream):
+      fixes/fix-misspelled-Allows-to-Allows-one-to.patch
+      fixes/fix-misspelled-allows-to-allows-one-to.patch
+      fixes/fix-misspelled-an-other-another.patch
+  * [50740a0] Revert "d/control: Build-Depend on libwxgtk3.0-gtk3-dev"
+    + The added build dependency on libwxgtk3.0-gtk3-dev was added to get
+      KiCad build against GTK3+ bindings but KiCad isn't fully ready and
+      prepared to use the GTK3+ stuff so we need to go back to libwxgtk3.0
+      with binding of GTK2+.
+  * [9fe8b7e] debian/rules: turn off support of SCRIPTING_WXPYTHON
+    + The scripting support engine needs wxpython which is currently only
+      available with GTK3+ bindings. So if we turn on scripting support we
+      will get a reverse dependency on libwxgtk3.0-gtk3 through wxpython.
+      This would result again in used GTK3+ symbols inside the KiCad binaries
+      and bring back the issues we had.
+    (Closes: #895801, #899215, #899216)
+  * [65826c8] debian/control: increase Standards-Version to 4.1.4
+    + No further changes needed.
+  * [f8389c2] debian/control: adjust field Maintainer due domain change
+    + The contact email address for the Debian Electronics Group has changed
+      to pkg-electronics-devel@alioth-lists.debian.net.
+  * [4251c7d] copyright: adopt upstream changes
+    + Due the upstream changes to the source we need to adopt the copyright
+      information.
+  * [30f2e7a] README.Debian: adding hints about GTK3+ issues
+    + Have a look into /us/s/d/k/README.Debian.gz to see some explanation why
+      the kicad package isn't using GTK3+ bindings of wxWidgets.
+  * [41c2de1] autopkg: adding again some auto testing stuff
+    + Let's add again some automatic testing for the kicad package.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 26 May 2018 13:15:07 +0200
+
+kicad (5.0.0~rc1+dfsg1+20180318-3) experimental; urgency=medium
+
+  * [35b932c] kicad: adding versioned Depends for python-wxgtk3.0
+    + To get sure users get a valid combination of python-wxgtk3.0 and
+      libwxgtk3.0-gtk3-0v5 adding strict version dependency on python-wxgtk3.0.
+  * [866cd63] d/README.Debian: update README file
+    + Write down some additional information about the problems with the
+      Modern Toolset in combination with Wayland that can happen. In some
+      circumstances the usage of Pcbnew or Gerbview in a Wayland environment
+      might cause crashes of KiCad or even the Wayland session.
+  * [935f451] debian/rules: update the DEB_KICAD_CMAKE_OPTS variable
+    + Enable the Python action plugin interface to see how this is going, we
+      might see new problems related to the wxwidgets framework and GTK2/GTK3.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Tue, 10 Apr 2018 18:28:27 +0200
+
+kicad (5.0.0~rc1+dfsg1+20180318-2) experimental; urgency=medium
+
+  * [7364bba] rebuild patch queue from patch-queue branch
+    + added patches:
+      fixes/fix-misspelled-Allows-to-Allows-one-to.patch
+      fixes/fix-misspelled-allows-to-allows-one-to.patch
+      fixes/fix-misspelled-an-other-another.patch
+  * [783a915] d/control: Build-Depend on libwxgtk3.0-gtk3-dev
+    + The wxwidgets3.0 package has introduced dedicated packages for GTK3, using
+      the new dev package on this so we get the correct GTK3 bindings.
+    (Closes: #895008)
+  * [756ff4d] debian/kicad.lintian-overrides: rework the entries
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 08 Apr 2018 12:55:58 +0200
+
+kicad (5.0.0~rc1+dfsg1+20180318-1) experimental; urgency=medium
+
+  * [fcfaee0] kicad-demos: adjusting B+R against previous kicad{-common} pkg
+    + Like for done for the virtual package kicad-libraries the package
+      kicad-demos also need a valid Breaks and Replace against the now
+      transitional package kicad-common so dpkg isn't complaining about files
+       which appears to be within two different packages.
+    (Closes: #892708)
+  * [12fa90d] kicad-libraries: remove Recommends on kicad-common
+    + Of course we won't recommending a now transitional package.
+  * [08bc66e] New upstream version 5.0.0~rc1+dfsg1+20180318
+  * [0a2d284] rebuild patch queue from patch-queue branch
+    + removed patches (applied upstream)
+      fixes/fix-misspelled-Appearence-Appearance.patch
+      fixes/fix-misspelled-Modifed-Modified.patch
+      fixes/fix-misspelled-Occassionally-Occasionally.patch
+      fixes/fix-misspelled-Unkown-Unknown.patch
+      fixes/fix-misspelled-accesing-accessing.patch
+      fixes/fix-misspelled-neeeded-needed.patch
+      fixes/fix-misspelled-occured-occurred.patch
+      fixes/fix-misspelled-streching-stretching.patch
+  * [8cfc758] debian/control: limit build to amd64, arm64, armhf and i386
+    + Unfortunately upstream is using a own libcontext implementation of
+      boost::context. This is decreasing the platforms KiCad can be build
+      on to i386, amd64, armhf and arm64.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Mon, 19 Mar 2018 19:11:39 +0100
+
+kicad (5.0.0~rc1+dfsg1-1) experimental; urgency=medium
+
+  * [ea0c219] override_dh_auto_install: use find/loop for chmod of files
+    + The shell (on the buildd's) on kFreebSD doesn't support wildcards in make
+      calls, but we can call chmod here within a 'for i in foo do' loop.
+  * [0b28f22] kicad package dependencies, using Dia for visiulizing
+    + Adding a graphic made with Dia which shows the correlation of the various
+      package ecosystem of KiCad within Debian. We use this Dia graphic on the
+      wiki site https://wiki.debian.org/KiCad
+  * [5ed2d63] update of package relations
+  * [446df3f] helper: remove obsolete libraries part
+    + With KiCad 5 the libraries are now have their own source packages and we
+      don't need to collect them in helper script inside stc:kicad any longer.
+  * [6936336] make dpkg happy because previously added DIA binary file
+    + The Dia file is a binary file for dpkg, adding this file to
+      debian/source/include-binaries so dpkg does not complaining about the file.
+  * [8726cae] d/gbp.conf: also remove the libraries component here
+  * [919a5cc] New upstream version 5.0.0~rc1+dfsg1
+    (Closes: #891286, #856277, #827203, #856180, #892161)
+  * [956ed41] rebuild patch queue from patch-queue branch
+    + removed patches (not needed anymore or fixed upstream):
+      debian-hacks/Adding-needed-SVG-files-and-additinal-arrays.patch
+      fixes/Add-missing-dependency-github_plugin-pcbcommon.patch
+      fixes/Fix-FTBFS-with-Boost-1.61.patch
+      fixes/Fixing-some-spelling-issues.patch
+
+    + modified patches:
+      fixes/Modifing-the-Exec-cmd-in-the-desktop-files.patch
+      porting-kfreebsd-hurd/Fix-FTBFS-on-kFreeBSD-and-Hurd.patch
+
+    + new patches:
+      fixes/fix-misspelled-Appearence-Appearance.patch
+      fixes/fix-misspelled-Modifed-Modified.patch
+      fixes/fix-misspelled-Occassionally-Occasionally.patch
+      fixes/fix-misspelled-Unkown-Unknown.patch
+      fixes/fix-misspelled-accesing-accessing.patch
+      fixes/fix-misspelled-neeeded-needed.patch
+      fixes/fix-misspelled-occured-occurred.patch
+      fixes/fix-misspelled-streching-stretching.patch
+
+      All new patches are forwarded to upstream and already accepted.
+
+  * [8e9d6c0] debian/control: adding new build dependencies
+    + We need now some more packages to build all the binary kicad packages:
+      fonts-freefont-ttf, libboost-test-dev, libglm-dev, liboce-foundation-dev,
+      liboce-ocaf-dev
+  * [8234277] debian/rules: remove old libraries related stuff
+    + We can remove the build specific things we previously have used to build
+      the library package.
+  * [430ec11] debian/control: adjust VCS entries to salsa.debian.org
+  * [5c54b36] kicad-doc-id: remove package
+    + Unfortunately the Indonesian documentation was removed by upstream because
+      of lack of contributors.
+  * [20044b2] kicad: change package to multiarch behaviour
+    + The 3D viewer is build as a local shared library plugin and this requires
+      some modification for the correct installation of the kicad package files.
+  * [422a784] debian/rules: disable the support of ngspice based simulation
+    + For the schematic simulation we would need the libngspice library which
+      isn't available in main yet. We can turn this later on once ngspice-dfsg
+      is hitting main.
+  * [63a280f] copyright: adopt upstream changes
+    + Of course the upstream source has been modified in many places and thus
+      the update of the copyright file is needed.
+  * [7729f4d] kicad-libraries: adding new virtual package
+    + The old kicad-common package was used to provide all the various libraries
+      like the schematic symbols, footprints and the 3D models.
+      As we have moved all the source of theses stuff into own source packages
+      we don't have kicad-common now any longer as a dedicated binary package.
+      So we created a meta-packge kicad-libraries that is depending on the
+      library packages for the schematic symbols (kicad-symbols), the footprints
+      (kicad-footprints) and the project templates (kicad-templates) which
+      kicad-common is depending on because we need to take care about the
+      automatic installation of the new library packages.
+      The 3D models is not depending on kicad-libraries as this is not really
+      needed to create successful PCBs, it's suggested instead.
+  * [0a8e611] kicad-common: turn package into a virtual package
+  * [ebcd0cd] remove kicad-common sequencer files
+  * [5739a23] d/kicad.install.in: update sequencer due upstream changes
+    + kicad-common isn't a real binary package now and most of it's installation
+      parts need now move over to the kicad binary package. Also KiCad is
+      installing now some private libraries.
+  * [600079f] kicad.lintian-overrides: add some more false positives
+    + We have some spelling issues which are false positives, also the library
+      libkicad_3dsg.so.2.0.0 isn't worth to get a own binary package.
+  * [4773043] debian/control: increase Standards-Version to 4.1.3
+    + No further changes are needed due version bump.
+  * [c277cc5] kicad: remove a potentially RUNPATH from Pyhton2 lib
+    + The library _pcbnew.so, which is also copied over to the Python libraries,
+      has a RUNPATH inside which shouldn't be set here. Upstream will fix this
+      in future releases.
+  * [be3e60d] kicad-demos: adding new package
+    + Beside the new schematic and footprint library related packages we also
+      split off the demo projects, they doesn't change that often but Ubuntu
+      is using already this package, so let's do it also and keep both
+      distribution the packages in sync. This is mostly to make the usage of the
+      PPA from Jean-Samuel esay for Ubuntu users.
+  * [be54a40] bump debhelper compat to version 11
+    + Jump over to the recent debhelper version, it's now already available for
+      backports so nothing special handling later will be needed,
+  * [2211a92] kicad: suggesting package kicad-packages3d
+    (Closes: #883312)
+  * [5403485] README.source: update information about source management
+    + Remove the information about the libraries. We don't handle them any
+      longer within src:kicad.
+  * [a4d8f6a] autopkg: remove the only existing autopkgtest
+    + We don't need the autopkg stuff for now, we can re-add it later if needed.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Wed, 07 Mar 2018 18:03:35 +0100
+
+kicad (4.0.7+dfsg1-1) unstable; urgency=medium
+
+  * [c306ee5] New upstream version 4.0.7+dfsg1
+    (Closes: #875942, #841539)
+  * [9ef473f] create_kicad_upstream_tarballs.sh: adjust to recent GH API
+    + Use a improved curl call to catch up all footprint related repositories
+      on GitHub. KiCad has now over 100 Repositories, but the GH API allows
+      only so query 100 per call.
+      Updating the list of repositories to download accordingly.
+  * [74df4fe] README.Debian: adding info about changes in 4.0.7
+    + Update the list of changed/moved repos, adding information about the
+      newly repositories.
+  * [05d21ad] debian/control: move Maintainer to PKG Electronics Team
+    + Let the KiCad packages move over to the PKG Electronix Team! The ML
+      there has quite a wider coverage. Remove Richard from the Uploaders.
+      Tanks go out to Richard for maintenance in the past years!
+  * [bb2e680] debian/control: increase Standards-Version to 4.0.1
+  * [e655e36] rebuild patch queue from patch-queue branch
+    + Refresh the patch queue, no functional changes.
+  * [5145b7a] debian/rules: use DEB_* variables for entries from changelog
+    + Let us use variables from /u/s/dpkg/pkg-info.mk, especially for picking
+      version and date of the package.
+  * [1addf7c] debian/copyright: reflect last changes and updates
+  * [c4e6635] kicad-doc-id.doc-base: update due added kicad i18n
+    + The manual for KiCad itself is now included for Indonesian.
+  * [1aff1fb] kicad-common: symlink more renamed footprint libraries
+    + Upstream modified again the footprint names, we need to add more symlinks
+      to let existing installation find the new repositories by the old
+      referenced name.
+  * [ea4e7d5] kicad-common.install: not installing folder /u/s/mimelnk
+    + Michael Biebl pointed to a useless installation of old mimelnk data,
+      this is cruft as it was only valid until the KDE3 desktop environment.
+    (Closes: #875527)
+  * [7a1e05a] debian/control: drop B-D on quilt
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sun, 17 Sep 2017 10:29:35 +0200
+
+kicad (4.0.6+dfsg1-1) unstable; urgency=medium
+
+  [ Carsten Schoenert ]
+  * [4d0ee6b] debian/rules: make dh_fixperms arch-depended (again)
+    + kicad-common is depending on python2 so we need to ensure dh_fixperms
+      for kicad-common is called within the arch-depend built.
+  * [4608380] idf2vrml.1: fix syntax of the hyphen for option '-k'
+  * [99b44a2] update footprint libraries for component tarball
+    + Upstream has renamed and also added some libraries after the release of
+      version 4.0.4. Related to the API of GitHub and more than 100
+      repositories in the KiCad organisation we need no adjust the collection
+      of the footprint libraries.
+      We still use a static list for the creation of the *.orig.tar.xz based
+      on the changed API call.
+  * [913d32a] New upstream version 4.0.6+dfsg1
+  * [4e62f6c] rebuild patch queue from patch-queue branch
+  * [9ec8227] debian/control: update B-D after upstream changes
+  * [8b0f985] adding new -doc package with Indonesian i18n
+    + A new documentation package for Indonesian is available. Currently only
+     for 'Getting Started in KiCad'.
+  * [a08cede] README.Debian: adding README for Debian specific remarks
+  * [c00487e] debian/rules: set permissions for *.kicad_mod files
+  * [9bf9f8c] kicad-common: symlink renamed footprint libraries
+    + Due the changes within the upstream source we got also different content
+      for kicad-common now. We added some symlinking to get backward
+      compatibility for existing installations and user settings.
+    (Closes: #859409, #860093)
+  * [8de0b6d] autopkg: starting first autopkg test for footprint libs
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Mon, 19 Jun 2017 09:58:21 +0200
+
+kicad (4.0.5+dfsg1-4) unstable; urgency=medium
+
+  [ Carsten Schoenert ]
+  * [375ce2f] Revert "debian/control: decrease Architectures for arch packages"
+    + removing the arch specific decrease of the build architecture, it's
+      really not useful here (Thx Emilio & Aurelien)
+  * [b2c400d] kicad-common.lintian-overrides: ignoring Lintian
+    + kicad-common is now arch dependent, silence lintian here that is saying
+      kicad-common has only content that is indep but we relay on the python
+      package
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Wed, 25 Jan 2017 22:38:35 +0100
+
+kicad (4.0.5+dfsg1-3) unstable; urgency=medium
+
+  [ Carsten Schoenert ]
+  * [1835f2e] debian/control: decrease Architectures for arch packages
+    + minimize the platform where kicad should be build, libboost-context-dev
+      isn't on all platforms available
+  * [4bd0315] manpages: adding missing manpages
+  * [d1b0883] debian/copyright: reflect last changes and updates
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Fri, 20 Jan 2017 21:51:15 +0100
+
+kicad (4.0.5+dfsg1-2) unstable; urgency=medium
+
+  [ Carsten Schoenert ]
+  * [85bda23] kicad-common: make package arch-depended
+  * [e38bb91] debian/kicad.install: fix installation of man pages
+  * [1e3fc2e] override_dh_fixperms: adding mised call for dh_fixperms
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Mon, 16 Jan 2017 18:56:50 +0100
+
+kicad (4.0.5+dfsg1-1) unstable; urgency=medium
+
+  [ Carsten Schoenert ]
+  * [cc405a8] debian/control: adding Vcs fields after creating git tree
+  * [a5b571d] rework helper script for source tarball creation
+  * [e0d8156] debian/kicad.lintian-overrides: be more flexible
+  * [f458b82] debian/rules: split dh_fixperms
+    (Closes: #847820)
+  * [dfd193b] New upstream version 4.0.5+dfsg1
+    (Closes: #851000)
+  * [47c248a] debian/rules: adjusting KICAD_FULL_VERSION
+  * [bb3ec74] rebuild patch queue from patch-queue branch
+  * [3d40398] kicad.install: re-adding the existing man pages
+  * [e0fdaa1] debian/control: split of B-D package asciidoc
+  * [774746f] debian/rules: remove build-arch specific target
+  * [3f5b978] debian/control: adding myself to the Uploaders
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 14 Jan 2017 21:45:37 +0100
+
+kicad (4.0.4+dfsg2-1) unstable; urgency=medium
+
+  [ Carsten Schoenert ]
+  * [41a2fdb] create patch-queue branch from the existing patches
+  * [22b5df9] debian/gbp.conf: adding helper config for git-buildpackage
+  * [3ea2c1d] debian/get-kicad.sh: modify script to get recent versions
+  * [eebdef9] New upstream version 4.0.4+dfsg2
+  * [3691290] debian/README.source: adjust info about gbp workflow
+  * [706c203] debian/control: wrap and sort the entries
+  * [a8f2838] place desktop file in favour of a menu files
+  * [4f033cf] kicad-doc*: adopt the documentation packages
+  * [8d7dd1a] debian/copyright: adjust copyright information
+  * [8d417ff] kicad: using the debhelper sequencer file mechanism
+  * [38470c3] kicad-common: also using debhelper sequencer files
+  * [e4be662] debian/control: adding new helper for dh_python2 support
+  * [bb84cb9] debian/watch: adjusting watch URL and filemangle
+  * [522a99e] debian/rules: enabling cmake build with some overrides
+    (Closes: #833685)
+  * [32f83db] debian/kicad.lintian-overrides: some needed overrides
+  * [1ce57ed] rebuild patch queue from patch-queue branch
+  * [182cc1a] rebuild patch queue from patch-queue branch
+  * [5eb0382] kicad: enable the BUILD_GITHUB_PLUGIN (Closes: #820261)
+  * [a200091] debian/copyright: adopt changes due libcurl support
+  * [6e43839] debian/control: adding explicit python dep for kicad-common
+  * [b96a3b7] debian/control: set Multi-Arch: foreign also on Arch: all
+  * [6e15016] rebuild patch queue from patch-queue branch
+  * [a869507] fix some buildflag hardening issues
+  * [95bb23d] rebuild patch queue from patch-queue branch
+  * [bc820d2] debian/rules: adding date from changelog to the Asciidoc files
+
+ -- Georges Khaznadar <georgesk@debian.org>  Tue, 15 Nov 2016 09:20:38 +0100
+
+kicad (4.0.4+dfsg1-2) unstable; urgency=medium
+
+  * Removed the spurious dependency on libglew, which should be computed
+    automatically by debian helper scripts. Closes: #838536
+
+ -- Georges Khaznadar <georgesk@debian.org>  Fri, 30 Sep 2016 14:46:55 +0200
+
+kicad (4.0.4+dfsg1-1) unstable; urgency=medium
+
+  * checked that 4.0.2+dfsg1-2~bpo8+1-1 is available. Closes: #811268
+  * modified .install files to install kicad.mo files. Closes: #819855
+  * applied Graham Inggs' patch. Closes: #834246
+  * added a Recommends: for xsltproc. Closes: #826750
+  * updated Standards-Version to 3.9.8
+  * upgraded to the last upstream version. Closes: #833777
+  * added build-dependencies on texlive-lang-cyrillic and texlive-fonts-extra
+
+ -- Georges Khaznadar <georgesk@debian.org>  Wed, 11 May 2016 16:14:08 +0200
+
+kicad (4.0.2+dfsg1-4) unstable; urgency=medium
+
+  * added a dependency on python-wxgtk3.0. Closes: #816525
+
+ -- Georges Khaznadar <georgesk@debian.org>  Thu, 03 Mar 2016 10:34:37 +0100
+
+kicad (4.0.2+dfsg1-3) unstable; urgency=medium
+
+  * changed the last patch according to Steven Chamberlain's proposition.
+  * added a build-dependency on libpython-stdlib, which should not harm
+    for most architectures, and might be necessary on a few ones.
+  * removed the tee commands from the build routine
+
+ -- Georges Khaznadar <georgesk@debian.org>  Mon, 22 Feb 2016 17:19:10 +0100
+
+kicad (4.0.2+dfsg1-2) unstable; urgency=medium
+
+  * Added a default define: LIB_ENV_VAR = wxT("LD_LIBRARY_PATH").
+    Closes: #815247
+
+ -- Georges Khaznadar <georgesk@debian.org>  Sat, 20 Feb 2016 16:59:52 +0100
+
+kicad (4.0.2+dfsg1-1) unstable; urgency=medium
+
+  * removed the obsoleted file debian/get_newest_source.sh
+  * modified debian/get-kicad.sh to download data from i18n
+    repositories, and to get kicad's core with version number 4.0.2
+  * updated to version 2.0.2
+  * created a new Makefile to compile i18n PO files
+  * fixed a mistake in bitmaps_png/CMakeLists.txt's patch : no need to
+    patch that file since files with copyright issues were replaced.
+  * added a build-dependency on gettext
+
+ -- Georges Khaznadar <georgesk@debian.org>  Mon, 15 Feb 2016 15:15:34 +0100
+
+kicad (4.0.1+dfsg1-2) unstable; urgency=medium
+
+  * fixed the short package description for kicad-doc-de.
+    Closes: #813605
+  * added usr/lib/python2.7/dist-packages in d/kicad.install.
+    Closes: #813655
+
+ -- Georges Khaznadar <georgesk@debian.org>  Thu, 04 Feb 2016 09:35:29 +0100
+
+kicad (4.0.1+dfsg1-1) unstable; urgency=medium
+
+  * repacked the source tarball, to withdraw files with a wrong license
+    and the .cpp files which were generated from those sources.
+  * created a new script debian/get_newest_source.sh and a file
+    debian/watch to enjoy it.
+  * modified debian/get_newest_source.sh to notify files with wrong
+    licenses.
+  * replaced files find.svg and find_replace.svg which came with wrong
+    licenses, and compiled them into cpp files.
+  * updated the URL in debian/copyright for Poly2Tri
+  * added a build-dependency on python-dev
+  * fixed the dependency on libglew1.13|libglew1.10 which prenvented
+    the installation of kicad. Closes: #807082; Closes: #805115
+  * checked that the scripts provided by Alexandre Rebert cannot
+    crash kicad's binaries any longer. Closes:  #715686.
+    Closes:  #716091. Closes: #716557.
+  * checked that the script to get sources does not miss
+    'TO_SOT_Packages_SMD.pretty' neither 'TO_SOT_Packages_THT.pretty'.
+    Closes: #804614
+  * added a build-dependency on python-all
+  * modified debian/get-kicad.sh to upgrade to version 4.0.1
+  * upgraded to the new upstream version
+  * xsltproc is now invoked with --nonet; Closes: #807082
+  * verified that all .pretty files are dowloaded when the source
+    package is created. Closes: #804614
+  * added a dependency on libglew >= 1.10; Closes: #805115
+  * added compile definitions to build python scripting features,
+    as recommended at http://kicad.org/download/source/
+  * added a build-dependencies on python-wxgtk3.0-dev and swig
+  * reactivated packages kicad-doc-de and kicad-doc-es; added build
+    dependencies texlive-lang-german and texlive-langspanish.
+  * added a dependency kicad-common -> python as this package contains
+    one python script. Added --with python option to the dh call.
+
+ -- Georges Khaznadar <georgesk@debian.org>  Thu, 07 Jan 2016 19:11:44 +0100
+
+kicad (4.0.0~rc1a-3) unstable; urgency=medium
+
+  * added a build-dependency on docbook-xsl; enforced a non-parallel build
+    for documents, following Simon Richter's hints. Closes: #806967
+
+ -- Georges Khaznadar <georgesk@debian.org>  Sun, 06 Dec 2015 20:08:42 +0100
+
+kicad (4.0.0~rc1a-2) unstable; urgency=medium
+
+  * applied Graham Inggs' patch. Closes: #806967
+
+ -- Georges Khaznadar <georgesk@debian.org>  Thu, 03 Dec 2015 18:27:16 +0100
+
+kicad (4.0.0~rc1a-1) unstable; urgency=medium
+
+  * added a dependency on libglew1.13; Closes #805115
+  * added new flags for CMAKE_OPTS in Makefile to display the correct version
+    in windows' titles.
+  * added "manually" repositories for TO_SOT_Packages_THT.pretty and
+    TO_SOT_Packages_SMD.pretty; Closes #804614
+  * remade the source package as too much files have been added for a simple
+    patch
+
+ -- Georges Khaznadar <georgesk@debian.org>  Sun, 15 Nov 2015 15:58:56 +0100
+
+kicad (4.0.0~rc1-2) unstable; urgency=medium
+
+  * fixed a typo in Makefile
+  * lowered the number of dependencies (dropped the dependency on all boost
+    libs, made a list of more precise dependencies)
+  * added CPPFLAGS to CXXFLAGS (workaround explained at
+    https://wiki.debian.org/Hardening#Notes_for_packages_using_CMake)
+  * added a switch -j4 in Makefile to trigger multithreading for the main
+    build
+
+ -- Georges Khaznadar <georgesk@debian.org>  Wed, 04 Nov 2015 10:48:42 +0100
+
+kicad (4.0.0~rc1-1) unstable; urgency=medium
+
+  * updated the script get-kicad.sh to download the core from Github, docs
+    and libraryes from Github. *.pretty libraries are downloaded from
+    Github too.
+  * created Makefile, doc/Makefile, library/Makefile
+  * modified d/rules, d/control, d/*.install, d/kicad.manpages
+  * written recipes to move shared libraries which were in /usr/bin/_*.kiface
+  * written recipes to choose the file fp-lib-table.for-pretty as a default
+    template
+  * written recipes to fix missing icons and to resize badly shaped 48x48
+    icons.
+  * updated the file debian/copyright
+  * the new package Closes: #795077; Closes: #770227; Closes: #783040;
+    Closes: #787983; Closes: #802973; Closes: #794311; Closes: #798966
+
+ -- Georges Khaznadar <georgesk@debian.org>  Fri, 23 Oct 2015 13:17:13 +0200
+
+kicad (0.20141025+bzr4029-2) unstable; urgency=medium
+
+  * modified the description of the package for Japanese documentation.
+    Closes: #767647
+  * modified the default path to templates. Closes: #771354
+
+ -- Georges Khaznadar <georgesk@debian.org>  Sat, 01 Nov 2014 19:39:30 +0100
+
+kicad (0.20141025+bzr4029-1) unstable; urgency=medium
+
+  * upgraded to the newest upstream releases for the code and the components.
+  * added a rule in d/rules to remove useless .ps files. Closes: #737933
+  * modified kicad.pro. Closes: #763683
+  * updated Standards-Version to 3.9.6
+  * added a build-dependency on unoconv
+  * added build rules to make PDF help files from sources
+  * added the package kicad-doc-ja in d/control, and files
+    d/kicad-doc-*.install, for "pt" and "ja" languages.
+
+ -- Georges Khaznadar <georgesk@debian.org>  Sun, 26 Oct 2014 10:26:51 +0100
+
+kicad (0.20140622+bzr4027-3) unstable; urgency=medium
+
+  * dropped the dependency on zlib-bin, since grep shows no occurence
+    of "minizip" nor "miniunzip" in kicad's source. Closes:  #761320
+
+ -- Georges Khaznadar <georgesk@debian.org>  Fri, 12 Sep 2014 23:20:43 +0200
+
+kicad (0.20140622+bzr4027-2) unstable; urgency=medium
+
+  * added  -DCMAKE_BUILD_TYPE=Release as a definition for cmake.
+    This does not fix every bug, but it removes dialogs about failed
+    assertions raised by wxASSERT, which are usually non-blocking,
+    as long as one decides to continue and unactivate the assert warnings.
+    Feel free to report bugs which affect user-level features.
+    Closes: #749278
+
+ -- Georges Khaznadar <georgesk@debian.org>  Wed, 02 Jul 2014 22:28:01 +0200
+
+kicad (0.20140622+bzr4027-1) unstable; urgency=medium
+
+  * added a routine to creat the version string. Closes: #749308
+  * upgraded to the newest component libraries. Closes: #751994
+
+ -- Georges Khaznadar <georgesk@debian.org>  Sun, 22 Jun 2014 18:29:50 +0200
+
+kicad (0.20140518+bzr4027-2) unstable; urgency=medium
+
+  * applied Samuel Thibault's patch. Closes: #749930
+
+ -- Georges Khaznadar <georgesk@debian.org>  Sun, 01 Jun 2014 16:34:06 +0200
+
+kicad (0.20140518+bzr4027-1) unstable; urgency=medium
+
+  * retrieved the last upstream version, Closes: #741673, Closes: #741437
+  * upgraded some build-dependencies, libwxgtk3.0-dev, applied a part of
+    Olly Betts' patch. Closes: #741440
+  * applied Dimitris Lampridis' patch. Closes: #745705
+  * modified get-kikad.sh to make xz compressed file.
+  * added a rule to fix permissions of ja/kicad.po
+
+ -- Georges Khaznadar <georgesk@debian.org>  Sun, 18 May 2014 14:59:05 +0200
+
+kicad (0.20140224+bzr4027-3.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * It FTBFS because kicad-common is arch independent.
+    Patch by Dejan Latinovic <Dejan.Latinovic@imgtec.com>.
+    Closes: #741743
+
+ -- Anibal Monsalve Salazar <anibal@debian.org>  Fri, 09 May 2014 04:33:24 +0100
+
+kicad (0.20140224+bzr4027-3) unstable; urgency=medium
+
+  * taken in account Samuel Thibault's hint. Closes: #740999
+
+ -- Georges Khaznadar <georgesk@debian.org>  Fri, 07 Mar 2014 11:48:29 +0100
+
+kicad (0.20140224+bzr4027-2) unstable; urgency=medium
+
+  * fixed a bug in d/rules.
+  * added a clause Conflicts: kicad-common ( << 0.20140224),
+    Closes: #740276
+  * Checked that the file Getting_Started_in_KiCad.pdf is distributed with
+    some -doc-xy packages. Closes: #691660
+
+ -- Georges Khaznadar <georgesk@debian.org>  Thu, 06 Mar 2014 02:24:33 +0100
+
+kicad (0.20140224+bzr4027-1) unstable; urgency=medium
+
+  * changed the lp: repository for kicad's library in order to match active
+    repositories listed at
+    https://code.launchpad.net/kicad/+branches?field.lifecycle=ALL&field.lifecycle-empty-marker=1&field.sort_by=most+recently+changed+first&field.sort_by-empty-marker=1
+    the file debian/get-kicad.sh should be more efficient now.
+    Closes: #712259
+  * modified the script debian/clean_sourceless_pdf: more formats are allowed
+    for source files, and the search for source files is now case-insensitive.
+    names without prefixes are allowed too (they are directory names)
+  * fixed a few wrong permissions in packaged files
+  * modified the package assignation for files in usr/share/applications
+  * modified the script debian/get-kicad.sh to add a minimum set of
+    legacy footprints. Closes: #736180; Closes: #707956
+  * removed bloated .ps files from the source package. Closes: #737933
+  * added a dependency on imagemagick to mamange the icons at build time
+
+ -- Georges Khaznadar <georgesk@debian.org>  Mon, 24 Feb 2014 15:40:26 +0100
+
+kicad (0.20131208+bzr4024-1) unstable; urgency=medium
+
+  * scheduled the installation of doc/internat into usr/share/kicad.
+    Closes: #734552
+  * upgraded Standards-Version to 3.9.5
+  * Upgraded to the newest upstream release. Closes: #712303
+  * The script debian/get-kicad.sh makes easier to fetch newer source files
+    Closes: #713861
+
+ -- Georges Khaznadar <georgesk@debian.org>  Wed, 08 Jan 2014 17:25:14 +0100
+
+kicad (0.20130727+bzr4024-2) unstable; urgency=low
+
+  * modified the homepage in d/control. Closes: #713858
+  * modified ./scripts/kicad-get-rss to remove bashisms. Closes: #690645
+  * modified d/kicad-common.install to fix forgotten libraries.
+    Closes: #719530
+
+ -- Georges Khaznadar <georgesk@debian.org>  Wed, 07 Aug 2013 11:19:25 +0200
+
+kicad (0.20130727+bzr4024-1) unstable; urgency=low
+
+  * upgraded to the last revision. Closes: #694740
+  * updated Standards-Version to 3.9.4, compat to 9.
+  * commented out a few lines in include/common.h, to enable the build
+    with wx libraries available in Sid. Don't know why these lines were
+    introduced.
+
+ -- Georges Khaznadar <georgesk@debian.org>  Sat, 27 Jul 2013 18:31:03 +0200
+
+kicad (0.20130125+bzr3921-1) unstable; urgency=low
+
+  * upgraded to the last revision. Closes: #694740
+  * changed my DEBEMAIL
+  * updated the variable GENERATED_FILES in debian/rules to add
+    new files to the cleaning list and remove obsoleted directories
+  * updated the patches for quilt
+  * updated debian/kicad-common.install to take in account the
+    no longer existent directories library and doc.
+
+ -- Georges Khaznadar <georgesk@debian.org>  Fri, 25 Jan 2013 19:08:22 +0100
+
+kicad (0.20120526+bzr3261-1) unstable; urgency=low
+
+  * upgraded to the last stable revision. Closes: #656215
+  * removed debian/source/include-binaries and the additional files which
+    came with it
+  * added a script debian/clean_sourceless_pdf which removes PDF files
+    in many directories when no source was found. This script outputs
+    a log file: debian/erased_pdf.log, which should be cleared when a
+    new upstream package is downloaded.
+  * modified kicad-doc-es.install since there is no source for the pdf file
+  * modified kicad-doc-pl.install since a pdf source is missing
+  * upgraded Standards-Version to 3.9.3
+  * precised a Replaces: stance (kicad (<< 0.20120126+bzr3256-1))
+
+ -- Georges Khaznadar <georgesk@ofset.org>  Sat, 26 May 2012 17:28:12 +0000
+
+kicad (0.20120126+bzr3256-3.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * gcc-4.7: Fix build failure with GCC 4.7.  Closes: #672727.
+    - include/boost/polygon/polygon_90_set_data.hpp: Include
+      "detail/polygon_sort_adaptor.hpp" for gtlsort.
+
+ -- Matej Vela <vela@debian.org>  Fri, 25 May 2012 22:25:46 +0100
+
+kicad (0.20120126+bzr3256-3) unstable; urgency=low
+
+  * excluded .pdf files from dh_compress. Closes: #659660
+
+ -- Georges Khaznadar <georgesk@ofset.org>  Wed, 15 Feb 2012 18:07:06 +0000
+
+kicad (0.20120126+bzr3256-2) unstable; urgency=low
+
+  * added the l10n files into the package kicad-common. Closes: #659091
+  * added eeschema.svg into usr/share/icons/hicolor/scalable/apps.
+    Closes: #659317
+  * applied Vincent Danjean's tip. Closes: #657729
+
+ -- Georges Khaznadar <georgesk@ofset.org>  Fri, 10 Feb 2012 17:54:11 +0000
+
+kicad (0.20120126+bzr3256-1) unstable; urgency=low
+
+  * upgraded to the latest upstream version. Closes: #656215
+  * modified the packaging scripts (simplified debian/rules, added
+    some .install files.
+
+ -- Georges Khaznadar <georgesk@ofset.org>  Thu, 26 Jan 2012 08:42:59 +0100
+
+kicad (0.0.20110616-1) unstable; urgency=low
+
+  * upgraded to the latest upstream version.
+  * included the files sent by their author, by email
+    <4DF93DA9.50504@iridec.com.au>, Closes: #630453
+
+ -- Georges Khaznadar <georgesk@ofset.org>  Thu, 16 Jun 2011 22:52:02 +0200
+
+kicad (0.0.20110507-1) unstable; urgency=low
+
+  * upgraded to the new upstream version. Closes: #624439
+
+ -- Georges Khaznadar <georgesk@ofset.org>  Sat, 07 May 2011 16:52:33 +0200
+
+kicad (0.0.20101024-2) unstable; urgency=low
+
+  * changed the format to 3.0 (quilt)
+  * enabled the parallel build feature in debian/rules
+
+ -- Georges Khaznadar <georgesk@ofset.org>  Sun, 24 Oct 2010 10:54:16 +0200
+
+kicad (0.0.20101024-1) unstable; urgency=low
+
+  * Maintainer change.
+    - Closes: #599427
+  * changed the way sources are downloaded. See debian/packagesrc.sh
+  * upgraded to newest stable release.
+    - Closes: #590483
+    - Closes: #580497
+  * moved the dependency on extra-xdg-menus to Suggests: level.
+    - Closes: #577282
+  * added a list of auto-generated files to remove upon clean target
+
+ -- Georges Khaznadar <georgesk@ofset.org>  Sun, 24 Oct 2010 02:34:38 +0200
+
+kicad (0.0.20100314-1) unstable; urgency=low
+
+  * New upstream (Closes: #575018).
+  * Update Standards-Version to 3.8.4 (no changes needed).
+
+ -- Richard Antony Burton <richardaburton@gmail.com>  Sun, 28 Mar 2010 12:58:23 +0000
+
+kicad (0.0.20090216-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #529628)
+  *  - Upstream fix. (Closes: #532367)
+  *  - Upstream fix. (Closes: #509956)
+  * Move shortcut to electronics section. (Closes: #536307)
+  * Suggest documentation. (Closes: #502546)
+  * Update Standards-Version to 3.8.3 (no changes needed).
+
+ -- Richard Antony Burton <richardaburton@gmail.com>  Sat, 26 Sep 2009 12:47:27 +0000
+
+kicad (0.0.20080825c-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #496897)
+  * Use new cmake build system.
+  * Use new svn repository layout.
+  * Build using wxWidgets 2.8. (Closes: #398615)
+  * Require debhelper 6 to get fix for 459426.
+  * Upstream performance improvement for redraw. (Closes: #469516)
+  * Moved examples to /usr/share/doc/kicad/demos
+  * Update Standards-Version to 3.8.0 (no changes needed).
+  * Add more language packages, for tutorials.
+  * Only en & fr manuals included, rest not currently maintained upstream.
+
+ -- Richard Antony Burton <richardaburton@gmail.com>  Sun, 21 Sep 2008 19:58:47 +0100
+
+kicad (0.0.20071129a-1) unstable; urgency=low
+
+  * New upstream release.
+  * Fix menu icon (not the gnome one).
+  * Update Standards-Version to 3.7.3.0 (Debian menu structure change only).
+
+ -- Richard Antony Burton <richardaburton@gmail.com>  Wed, 19 Dec 2007 17:04:33 +0000
+
+kicad (0.0.20070702-1) unstable; urgency=low
+
+  * New upstream release.
+  * Added man pages for binaries. (Closes: #429223)
+  * All patches from previous version now included upstream.
+
+ -- Richard Antony Burton <richardaburton@gmail.com>  Sun, 08 Jul 2007 09:15:42 +0100
+
+kicad (0.0.20070525-1) unstable; urgency=low
+
+  * New upstream release (Closes: #423873)
+  * Install help files to correct location (Closes: #404783)
+  * For languages without native help files the English doc package is pulled in
+    with the non-English doc package, so there is at least some help.
+  * Not removing all binaries removed during 'clean' (Closes: #424455)
+  * Patch for the 3D Display image export problem (Closes: #423882)
+
+ -- Richard Antony Burton <richardaburton@gmail.com>  Sun, 27 May 2007 13:43:01 +0100
+
+kicad (0.0.20060829-2) unstable; urgency=low
+
+  * Fixing wrong location of helpfiles (Closes: #404783) (djp)
+
+ -- Daniel J. Priem <danielpriem@flexserv.de>  Thu, 28 Dec 2006 12:20:31 +0100
+
+kicad (0.0.20060829-1) unstable; urgency=low
+
+  * now binNMU safe (rab)
+  * This version is 20060828 but since i forgot something inside the orig.tar.gz i must increase the version number (djp)
+  * Added newer documentation (djp)
+  * Added some updated po files (djp)
+  * Added italian help files (djp)
+
+ -- Daniel J. Priem <danielpriem@flexserv.de>  Sun, 12 Nov 2006 21:40:23 +0100
+
+kicad (0.0.20060828-1) unstable; urgency=low
+
+  * New upstream.
+  * Split help files out into separate language-specific packages.
+
+ -- Debian Kicad Team <kicad-devel@lists.mose.flexserv.de>  Fri,  3 Nov 2006 19:33:07 +0100
+
+kicad (0.0.20060626-1) unstable; urgency=low
+
+  * Initial release (Closes: #278581)
+
+ -- Richard Antony Burton <richardaburton@hotmail.com>  Sat, 30 Sep 2006 22:24:06 +0200

@@ -1,0 +1,42 @@
+resources/bitmaps_png/icons/icon_kicad.xpm      usr/share/pixmaps
+usr/bin/_cvpcb.kiface            usr/lib/kicad
+usr/bin/_eeschema.kiface         usr/lib/kicad
+usr/bin/_gerbview.kiface         usr/lib/kicad
+usr/bin/_kipython.kiface         usr/lib/kicad
+usr/bin/_pcb_calculator.kiface   usr/lib/kicad
+usr/bin/_pcbnew.kiface           usr/lib/kicad
+usr/bin/_pl_editor.kiface        usr/lib/kicad
+usr/bin/bitmap2component
+usr/bin/dxf2idf
+usr/bin/eeschema
+usr/bin/gerbview
+usr/bin/idf2vrml
+usr/bin/idfcyl
+usr/bin/idfrect
+usr/bin/kicad
+usr/bin/kicad-cli
+usr/bin/pcb_calculator
+usr/bin/pcbnew
+usr/bin/pl_editor
+usr/lib/@DEB_HOST_MULTIARCH@/kicad/plugins/3d
+usr/lib/@DEB_HOST_MULTIARCH@/libkiapi*
+usr/lib/@DEB_HOST_MULTIARCH@/libkicad*
+usr/lib/@DEB_HOST_MULTIARCH@/libkicommon*
+usr/lib/@DEB_HOST_MULTIARCH@/libkigal*
+usr/lib/python3/dist-packages
+usr/share/applications
+usr/share/bash-completion/completions/kicad-cli
+usr/share/icons
+usr/share/kicad/plugins
+# installing the following file into the /u/s/d/kicad and symlink it to
+# /u/s/k/plugins via kicad.links sequencer
+usr/share/kicad/plugins/README-bom.txt usr/share/doc/kicad
+usr/share/kicad/resources
+usr/share/kicad/schemas
+usr/share/kicad/scripting
+usr/share/kicad/template
+usr/share/locale
+usr/share/metainfo
+usr/share/mime
+usr/share/zsh/site-functions/_kicad-cli
+debian/man/*                     usr/share/man/man1
