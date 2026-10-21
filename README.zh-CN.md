@@ -13,7 +13,7 @@ Debian 打包工具构建 `.deb`，通过 GitHub Actions 测试并由 GitHub Rel
 本仓库是一个 **Debian 下游打包仓库**，不是把 KiCad 编译产物直接塞进一个不透明
 压缩包的脚本集合。
 
-> **状态**：流水线、打包配置、校验和签名与发布门禁已经实现。首次完整编译必须在
+> **状态**：流水线、打包配置、校验和与发布门禁已经实现。首次完整编译必须在
 > GitHub Actions 或自建 Debian 13 VM 上跑通；任何失败都会阻止正式 Release。
 > 本仓库不是 Debian 官方项目，产出的包也不是官方 Debian 包。
 
@@ -49,21 +49,16 @@ man page 和运行时资源。
 
 ## 安装
 
-从 GitHub Releases 下载 `.deb`、`SHA256SUMS`、`SHA256SUMS.asc` 和
-`release-key.asc`，然后：
+从 GitHub Releases 下载 `.deb` 和 `SHA256SUMS`，然后：
 
 ```bash
-# 1. 通过独立渠道核对 release-key.asc 的指纹后导入
-gpg --import release-key.asc
-
-# 2. 校验签名和每个文件
-gpg --verify SHA256SUMS.asc SHA256SUMS
+# 1. 校验每个下载文件
 sha256sum -c SHA256SUMS
 
-# 3. 安装（apt 会解析运行时依赖）
+# 2. 安装（apt 会解析运行时依赖）
 sudo apt install ./kicad_10.0.7+dfsg-1+trixie1_amd64.deb
 
-# 4. 验证
+# 3. 验证
 kicad-cli version
 ```
 
@@ -73,8 +68,8 @@ kicad-cli version
 sudo apt install --no-install-recommends ./kicad_10.0.7+dfsg-1+trixie1_amd64.deb
 ```
 
-签名只能证明文件由持有该密钥的人发布。必须通过项目 README、Release 说明或其他
-独立渠道核对密钥指纹，不能因为 `.asc` 和 `.deb` 放在一起就默认可信。
+这些 Release **不签名**。`SHA256SUMS` 能发现损坏或意外修改，但不能证明文件由谁
+发布。若需要确认来源真实性，请通过独立可信渠道获取校验和文件。
 
 ## 架构
 
@@ -88,7 +83,7 @@ flowchart LR
   F --> G[干净 Debian 13 容器安装测试]
   G --> H[校验和 + build-info]
   H --> I{标签与清单一致?}
-  I -->|是| J[签名 SHA256SUMS]
+  I -->|是| J[重新生成 SHA256SUMS]
   J --> K[GitHub Release]
   I -->|否| L[失败，不发布]
 ```
@@ -98,7 +93,7 @@ flowchart LR
 - `build.yml`：可手动触发，也可以在发布时被调用；只产出经过测试的 artifact，
   不直接创建 Release。
 - `release.yml`：只由 `v*` 标签触发；先验证标签与源码清单完全一致，再调用构建，
-  最后在受保护的 `release` Environment 中签名并发布。
+  最后在受保护的 `release` Environment 中生成校验和并发布。
 - `ci.yml`：PR/push 上的快速检查（shellcheck、yamllint、actionlint、版本清单、
   打包配置来源比对、Trixie 构建依赖解析），不执行完整编译。
 
@@ -171,7 +166,7 @@ docker run --rm -it -v "$PWD:/work" -w /work \
 │   ├── workflows/
 │   │   ├── ci.yml               # PR/push 快速检查
 │   │   ├── build.yml            # 可复用/手动构建，不发布
-│   │   └── release.yml          # 标签触发、构建、签名、发布
+│   │   └── release.yml          # 标签触发、构建、发布
 │   ├── actionlint.yaml
 │   └── dependabot.yml
 ├── debian/                      # 官方 Debian 打包 + 下游 changelog 条目
@@ -184,7 +179,7 @@ docker run --rm -it -v "$PWD:/work" -w /work \
 │   ├── versions.env             # 唯一版本清单
 │   ├── sources.sha256           # 官方源码 SHA-256
 │   └── allowed-packaging-diff.txt
-├── scripts/                     # 下载、构建、测试、审计、签名
+├── scripts/                     # 下载、构建、测试、审计、校验和
 ├── tests/                       # 依赖/文件布局检查、干净容器冒烟测试
 ├── Makefile
 ├── README.md            # English (default)
@@ -207,16 +202,16 @@ docker run --rm -it -v "$PWD:/work" -w /work \
 `Build-Depends`；若 Trixie 不满足版本要求，流水线失败，维护者必须评估补丁、
 单独打包依赖或暂缓发布，而不是删除依赖或关闭 ABI 检查。
 
-## 发布与签名
+## 发布与校验和
 
 发布只允许由与 `packaging/versions.env` 中 `RELEASE_TAG` 完全一致的标签触发。
 `v10.0.8` 之类的标签不会让流水线继续使用 10.0.7 源码。
 
-发布 job 使用 GitHub Environment `release`，应配置人工审批和标签保护。签名密钥只
-保存在 Environment secret 中；公钥指纹通过 repository variable
-`RELEASE_KEY_FINGERPRINT` 固定，并在签名前强制比对。
+发布 job 使用 GitHub Environment `release`，可配置人工审批和标签保护。Release
+**不签名**：不需要 GPG 密钥、secret 或指纹。工作流在附加 Release notes 和
+smoke test 报告后重新生成并验证 `SHA256SUMS`，然后与 `.deb` 一起发布。
 
-详细发布清单、密钥生成/轮换、标签规则和回滚策略见
+详细发布清单、校验和策略、标签规则和回滚策略见
 [docs/RELEASE.md](docs/RELEASE.md)。
 
 ## 已知限制
@@ -227,13 +222,14 @@ docker run --rm -it -v "$PWD:/work" -w /work \
 - CI 不启动 GUI（无显示服务器），只做 CLI、Python 模块、桌面文件、安装/卸载测试。
 - 首次完整编译和所有 Trixie 兼容性问题仍需由真实 CI 运行确认；静态检查不能替代
   编译。
+- Release 不签名；校验和能发现损坏，但不提供发布者身份认证。
 - 产物尚未由独立的可复现构建验证；`build-info.json` 记录源码摘要与构建环境，
   便于后续比对。
 
 ## 安全
 
 请阅读 [docs/SECURITY.md](docs/SECURITY.md)。安全问题请通过 GitHub Security
-Advisories 私下报告，不要在公开 issue 中粘贴签名私钥、token 或未修复漏洞细节。
+Advisories 私下报告，不要在公开 issue 中粘贴 token 或未修复漏洞细节。
 
 ## 许可
 

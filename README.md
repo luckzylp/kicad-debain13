@@ -16,7 +16,7 @@ tested artifact.
 It is a **Debian downstream packaging repository**, not a script that compiles
 KiCad and wraps the result in an opaque archive.
 
-> **Status:** the pipeline, packaging configuration, checksum/signature handling,
+> **Status:** the pipeline, packaging configuration, checksum handling,
 > and release gates are implemented. The first full compilation must pass in
 > GitHub Actions or on a self-hosted Debian 13 VM; any failure blocks a formal
 > release. This is not an official Debian project, and the resulting package is
@@ -62,21 +62,16 @@ not the default release gate.
 
 ## Install
 
-Download the `.deb`, `SHA256SUMS`, `SHA256SUMS.asc`, and `release-key.asc` from
-GitHub Releases, then:
+Download the `.deb` and `SHA256SUMS` from GitHub Releases, then:
 
 ```bash
-# 1. Verify the release-key.asc fingerprint through an independent channel, then import it
-gpg --import release-key.asc
-
-# 2. Verify the signature and every downloaded file
-gpg --verify SHA256SUMS.asc SHA256SUMS
+# 1. Verify every downloaded file against the checksum file
 sha256sum -c SHA256SUMS
 
-# 3. Install; apt resolves the runtime dependencies
+# 2. Install; apt resolves the runtime dependencies
 sudo apt install ./kicad_10.0.7+dfsg-1+trixie1_amd64.deb
 
-# 4. Verify
+# 3. Verify
 kicad-cli version
 ```
 
@@ -86,10 +81,9 @@ If apt tries to install Debian 13's 9.0.x library packages and fails, use:
 sudo apt install --no-install-recommends ./kicad_10.0.7+dfsg-1+trixie1_amd64.deb
 ```
 
-A signature only proves that the file was published by the holder of that key.
-Verify the key fingerprint through this README, the release notes, or another
-independent channel. Do not trust an `.asc` file merely because it was
-downloaded alongside the `.deb`.
+These releases are **unsigned**. `SHA256SUMS` detects corruption and accidental
+modification, but it does not prove who published the files. For authenticity,
+obtain the checksum file through an independent trusted channel.
 
 ## Architecture
 
@@ -103,7 +97,7 @@ flowchart LR
   F --> G[Clean Debian 13 container install test]
   G --> H[Checksums + build-info]
   H --> I{Tag matches manifest?}
-  I -->|Yes| J[Sign SHA256SUMS]
+  I -->|Yes| J[Regenerate SHA256SUMS]
   J --> K[GitHub Release]
   I -->|No| L[Fail; do not publish]
 ```
@@ -113,8 +107,8 @@ Build and publication are separate chains:
 - `build.yml`: manually dispatchable or called by the release workflow; produces
   tested artifacts and never creates a GitHub Release itself.
 - `release.yml`: triggered only by a `v*` tag. It verifies that the tag exactly
-  matches the source manifest, calls the build, and signs/publishes from a
-  protected `release` environment.
+  matches the source manifest, calls the build, and publishes from a protected
+  `release` environment.
 - `ci.yml`: fast PR/push checks (shellcheck, yamllint, actionlint, version
   manifest, packaging provenance, Trixie Build-Depends resolution). It does not
   perform a full build.
@@ -193,7 +187,7 @@ fails, the dependency policy, and reproducibility limitations, see
 │   ├── workflows/
 │   │   ├── ci.yml               # fast PR/push checks
 │   │   ├── build.yml            # reusable/manual build; never publishes
-│   │   └── release.yml          # tag-triggered build, sign, and publish
+│   │   └── release.yml          # tag-triggered build and publish
 │   ├── actionlint.yaml
 │   └── dependabot.yml
 ├── debian/                      # official Debian packaging + downstream changelog
@@ -206,7 +200,7 @@ fails, the dependency policy, and reproducibility limitations, see
 │   ├── versions.env             # single source of truth for versions
 │   ├── sources.sha256           # official source SHA-256 digests
 │   └── allowed-packaging-diff.txt
-├── scripts/                     # download, build, test, audit, signing
+├── scripts/                     # download, build, test, audit, checksums
 ├── tests/                       # dependency/layout checks, clean-container smoke test
 ├── Makefile
 ├── README.md
@@ -233,19 +227,20 @@ a version, the pipeline fails and a maintainer must decide whether to patch,
 backport a dependency, or defer the release. Removing dependencies or disabling
 ABI checks to make CI green is not acceptable.
 
-## Release and signing
+## Release and checksums
 
 A release can only be triggered by a tag that exactly matches `RELEASE_TAG` in
 `packaging/versions.env`. A tag such as `v10.0.8` cannot make the pipeline
 publish the 10.0.7 source under a new version.
 
 The publish job uses the GitHub `release` environment, which should require
-manual approval and tag protection. The signing key exists only as an
-environment secret; the public-key fingerprint is pinned in the repository
-variable `RELEASE_KEY_FINGERPRINT` and checked before signing.
+manual approval and tag protection. Releases are **unsigned**: no GPG key,
+secret, or fingerprint is required. The workflow regenerates `SHA256SUMS` after
+adding the release notes and smoke-test report, verifies it, and uploads it with
+the `.deb`.
 
-For the release checklist, key generation and rotation, tag rules, and rollback
-policy, see [docs/RELEASE.md](docs/RELEASE.md).
+For the release checklist, checksum policy, tag rules, and rollback policy, see
+[docs/RELEASE.md](docs/RELEASE.md).
 
 ## Known limitations
 
@@ -258,13 +253,15 @@ policy, see [docs/RELEASE.md](docs/RELEASE.md).
   Python module, desktop files, and install/uninstall behavior.
 - The first full compilation and any Trixie compatibility issues still need to
   be confirmed by a real CI run; static checks cannot replace compilation.
+- Releases are unsigned. Checksums detect corruption but do not provide
+  cryptographic publisher authenticity.
 - The output has not yet been independently reproduced. `build-info.json`
   records source digests and the build environment to support later comparison.
 
 ## Security
 
 Read [docs/SECURITY.md](docs/SECURITY.md). Report security issues privately through
-GitHub Security Advisories. Do not paste signing keys, tokens, or unpatched
+GitHub Security Advisories. Do not paste tokens or unpatched
 vulnerability details into public issues.
 
 ## License

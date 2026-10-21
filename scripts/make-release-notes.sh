@@ -9,7 +9,6 @@ load_versions
 mkdir -p "$DIST_DIR"
 
 run_url="${GITHUB_SERVER_URL:-https://github.com}/${GITHUB_REPOSITORY:-OWNER/REPO}/actions/runs/${GITHUB_RUN_ID:-unknown}"
-fingerprint="${RELEASE_KEY_FINGERPRINT:-SEE-README}"
 
 main_deb="$(basename "$(find "$DIST_DIR" -maxdepth 1 -type f \
   -name "${BINARY_PACKAGE}_${DEB_VERSION}_${ARCHITECTURE}.deb" -print -quit)")"
@@ -28,7 +27,7 @@ on Debian 13 (trixie).
 - **Source:** official Debian source package, signed \`.dsc\` and pinned SHA-256
   digests ([\`packaging/sources.sha256\`](https://github.com/${GITHUB_REPOSITORY:-OWNER/REPO}/blob/${GITHUB_REF_NAME:-main}/packaging/sources.sha256))
 - **Build log and provenance:** [GitHub Actions run](${run_url})
-- **Release key fingerprint:** \`${fingerprint}\`
+- **Signing:** none (unsigned release)
 
 ## Install
 
@@ -55,19 +54,16 @@ before opening projects that need them.
 
 ## Verify the download
 
-The release key is published as \`release-key.asc\`.  Verify its fingerprint
-through an independent channel before trusting it.
+This release is **unsigned**.  Download \`SHA256SUMS\` and check the files:
 
 \`\`\`bash
-gpg --import release-key.asc
-gpg --verify SHA256SUMS.asc SHA256SUMS
 sha256sum -c SHA256SUMS
 \`\`\`
 
-\`SHA256SUMS.asc\` signs every release asset listed in \`SHA256SUMS\`, including
-\`build-info.json\`, the Lintian report, and the build dependency report.
-A valid signature only proves that the key holder produced the files; it does
-not replace trusting the key fingerprint.
+\`SHA256SUMS\` covers the \`.deb\`, \`build-info.json\`, the release notes, and
+the test/audit reports.  It detects corruption and accidental modification, but
+it does **not** prove who published the files.  For authenticity, obtain the
+checksum file through an independent trusted channel.
 
 ## Scope and limitations
 

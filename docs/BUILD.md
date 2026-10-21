@@ -154,7 +154,6 @@ sudo chown -R "$(id -u):$(id -g)" build dist .cache
 | `make-checksums.sh` | 对 `dist/` 中所有发布资产生成 `SHA256SUMS` | 否 |
 | `make-build-info.py` | 生成 `build-info.json` | 否 |
 | `make-release-notes.sh` | 生成 Release 说明 | 否 |
-| `sign-release.sh` | 校验私钥指纹、导出公钥、重算校验和、签名 | 否 |
 | `validate-manifest.sh` | 版本/发行版/tag/校验和清单一致性 | 否 |
 | `validate-release-tag.sh` | 标签必须与 `RELEASE_TAG` 完全一致 | 否 |
 | `prepare-workspace.sh` | 清理旧产物、检查磁盘/内存/环境 | 否 |
@@ -310,6 +309,6 @@ JOBS=2 ./scripts/build-deb.sh --scope arch
 
 ## 12. 相关文档
 
-- [RELEASE.md](RELEASE.md)：版本、标签、签名、发布清单
+- [RELEASE.md](RELEASE.md)：版本、标签、校验和、发布清单
 - [SECURITY.md](SECURITY.md)：威胁模型与供应链安全
 - [SELF-HOSTED-VM.md](SELF-HOSTED-VM.md)：自建 Debian 13 runner

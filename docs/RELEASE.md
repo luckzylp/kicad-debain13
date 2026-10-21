@@ -112,9 +112,8 @@ make smoke   # 一次性容器/VM
 - [ ] `import pcbnew` 成功
 - [ ] 桌面文件通过 `desktop-file-validate`
 - [ ] 卸载后无残留、`dpkg --audit` 为空
-- [ ] `SHA256SUMS` 覆盖所有发布资产
-- [ ] `SHA256SUMS.asc` 由已登记指纹的密钥签名并可验证
-- [ ] `release` Environment 已人工审批
+- [ ] `SHA256SUMS` 覆盖所有发布资产并重新验证
+- [ ] `release` Environment 已配置人工审批（建议）
 
 任何一项失败都不创建 Release。不要用“先发布再修”的方式绕过。
 
@@ -124,11 +123,9 @@ make smoke   # 一次性容器/VM
 
 1. **Environments → release**
    - Required reviewers：至少 1 名维护者；
-   - Deployment branches and tags：仅允许受保护的 `v*` 标签；
-   - 不要把签名私钥放到普通 Actions secret，放在 Environment secret。
+   - Deployment branches and tags：仅允许受保护的 `v*` 标签。
 2. **Rules → Tags**
-   - 限制 `v*` 标签的创建/删除/强制推送给维护者；
-   - 如可能，要求签名标签。
+   - 限制 `v*` 标签的创建/删除/强制推送给维护者。
 3. **Actions**
    - 默认 `GITHUB_TOKEN` 只读；
    - 仅 `release` job 提升为 `contents: write`；
@@ -138,55 +135,37 @@ make smoke   # 一次性容器/VM
    - 不把 runner 开放给 fork PR；
    - 定期重建或使用一次性 VM。
 
-## 6. 签名密钥
+## 6. 不签名发布
 
-### 6.1 生成专用密钥
+本仓库的 Release **不做 GPG 签名**。因此：
 
-不要复用个人日常 GPG 密钥。建议使用离线/受控环境生成，密钥只用于发布：
+- 不需要 `RELEASE_GPG_PRIVATE_KEY`；
+- 不需要 `RELEASE_GPG_PASSPHRASE`；
+- 不需要 `RELEASE_KEY_FINGERPRINT`；
+- Release 资产中不包含 `SHA256SUMS.asc` 或 `release-key.asc`。
 
-```bash
-gpg --quick-generate-key \
-  "KiCad Debian 13 Release <kicad-debian13@users.noreply.github.com>" \
-  rsa4096 sign 2y
+发布 job 仍然会：
 
-FPR="$(gpg --with-colons --list-secret-keys \
-  | awk -F: '$1=="fpr" {print $10; exit}')"
-echo "$FPR"
+1. 下载经过构建和 smoke test 的同一批 artifact；
+2. 附加 smoke test 报告；
+3. 生成 Release notes；
+4. 重新生成 `SHA256SUMS`，覆盖 `.deb`、`build-info.json`、Release notes 和报告；
+5. 用 `sha256sum -c` 验证；
+6. 通过 `gh release create` 发布。
 
-gpg --armor --export "$FPR" > release-key.asc
-gpg --armor --export-secret-keys "$FPR" > release-key.private.asc
+`SHA256SUMS` 只能发现下载损坏或意外修改，**不能证明发布者身份**。如果用户需要确认
+来源真实性，应通过独立可信渠道获取校验和，或自行构建。
 
-# 立即把私钥放入 GitHub Environment secret，然后从磁盘安全删除
-gh secret set RELEASE_GPG_PRIVATE_KEY --env release < release-key.private.asc
-gh variable set RELEASE_KEY_FINGERPRINT --body "$FPR"
+### 6.1 为什么保留源码签名校验
 
-shred -u release-key.private.asc
-```
+Release 不签名，但 `fetch-source.sh` 仍然验证 Debian 官方 `.dsc` 的开发者签名。
+这是为了确认构建输入来自 Debian 官方源码包，与“是否给最终 `.deb` 签名”是两件事。
+不要因为关闭 Release 签名就跳过 `.dsc` 校验。
 
-- `RELEASE_GPG_PRIVATE_KEY`：ASCII-armored 私钥，放在 **Environment** `release`
-  的 secret 中。
-- `RELEASE_KEY_FINGERPRINT`：完整 40 位指纹，放在 repository variable。
-- `RELEASE_GPG_PASSPHRASE`：如私钥有口令，放在 Environment secret；无口令则不设置。
-- `release-key.asc` 可以提交到仓库，也可以只随 Release 发布。当前流水线在发布时
-  从私钥导出公钥，并把它加入 `SHA256SUMS`。
+### 6.2 如果以后想恢复签名
 
-`sign-release.sh` 会：
-
-1. 在临时 `GNUPGHOME` 中导入私钥；
-2. 读取实际指纹并与 `RELEASE_KEY_FINGERPRINT` 比对；
-3. 导出公钥到 `dist/release-key.asc`；
-4. 重新生成 `SHA256SUMS`（包含公钥、Release notes、报告）；
-5. 签名并立即验证；
-6. 清理临时密钥目录。
-
-指纹不匹配、私钥为空、签名失败都会阻止发布。
-
-### 6.2 轮换/吊销
-
-1. 生成新密钥，更新 Environment secret 与 `RELEASE_KEY_FINGERPRINT`；
-2. 在 README/Release 说明中公布新旧指纹和轮换日期；
-3. 旧密钥如泄露，立即吊销并在仓库发布安全公告；
-4. 已发布的旧资产不会因为轮换而自动可信，用户仍应按发布时的指纹验证。
+需要重新引入签名脚本、工作流步骤和文档，并配置专用密钥。当前版本明确不提供该
+功能，避免出现“看起来签名了、实际没有”的状态。
 
 ## 7. 发布操作
 
@@ -198,31 +177,28 @@ shred -u release-key.private.asc
 4. 创建并推送标签：
 
    ```bash
-   git tag -s v10.0.7 -m "KiCad 10.0.7 for Debian 13 (trixie1)"
+   git tag -a v10.0.7 -m "KiCad 10.0.7 for Debian 13 (trixie1)"
    git push origin v10.0.7
    ```
 
 5. `Release` workflow 依次执行：标签校验 → 构建 → 干净容器安装测试 → 人工审批 →
-   签名 → `gh release create`。
+   重新生成并验证 `SHA256SUMS` → `gh release create`。
 6. 在 GitHub Release 页面再次核对：
    - 版本、架构、标签；
-   - `.deb`、`SHA256SUMS`、`SHA256SUMS.asc`、`release-key.asc`、`build-info.json`；
-   - Release notes 中的安装/验证命令；
-   - 公钥指纹。
+   - `.deb`、`SHA256SUMS`、`build-info.json`；
+   - Release notes 中的安装/验证命令。
 7. 在一台干净的 Debian 13 机器上按 Release notes 完整验证一次。
 
 ## 8. 用户验证
 
 ```bash
-gpg --import release-key.asc
-gpg --verify SHA256SUMS.asc SHA256SUMS
 sha256sum -c SHA256SUMS
 sudo apt install ./kicad_10.0.7+dfsg-1+trixie1_amd64.deb
 kicad-cli version
 ```
 
-指纹必须从独立渠道（项目 README、维护者公告）核对。签名文件与 `.deb` 一起下载
-不构成信任。
+校验和只能发现损坏或意外修改，不能证明发布者身份。对来源真实性有要求时，请通过
+独立可信渠道获取 `SHA256SUMS`，或自行从源码构建。
 
 ## 9. 回滚与撤回
 
@@ -231,7 +207,7 @@ kicad-cli version
   1. 将 Release 标记为 pre-release 或在说明顶部加显著警告；
   2. 发布新的 `+trixieN` 修订修复；
   3. 必要时在仓库发布 Security Advisory；
-  4. 不建议直接删除标签，除非密钥泄露等极端情况，并记录原因。
+  4. 不建议直接删除标签，除非仓库/账号被入侵等极端情况，并记录原因。
 - 用户侧回滚：`sudo apt install ./kicad_<older-version>_amd64.deb`，或卸载后安装
   Debian 官方 9.0.x。
 
@@ -243,8 +219,6 @@ kicad-cli version
 | `kicad_..._amd64.buildinfo` | 构建环境/校验和 |
 | `kicad_..._amd64.changes` | Debian 二进制上传描述 |
 | `SHA256SUMS` | 所有资产的校验和 |
-| `SHA256SUMS.asc` | 对校验和文件的分离签名 |
-| `release-key.asc` | 发布公钥 |
 | `build-info.json` | 源码摘要、构建 runner、产物哈希 |
 | `RELEASE-NOTES.md` | 安装/验证/限制说明 |
 | `reports/*` | 构建依赖、Lintian、环境、源码 provenance |
