@@ -8,9 +8,10 @@
 set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/../scripts/lib.sh"
 
+load_versions
 [[ ${EUID} -eq 0 ]] || die "smoke test must run as root in a disposable Debian 13 environment"
 require_debian_13
-require_cmd apt-get dpkg dpkg-query
+require_cmd apt-get dpkg dpkg-deb dpkg-query
 
 if [[ $# -eq 0 ]]; then
   shopt -s nullglob
@@ -29,7 +30,6 @@ for deb in "$@"; do
 done
 [[ -n "$main_deb" ]] || die "no ${BINARY_PACKAGE} package found"
 
-load_versions
 mkdir -p "$REPORT_DIR"
 report="${REPORT_DIR}/smoke-test.txt"
 : > "$report"
