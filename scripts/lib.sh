@@ -142,7 +142,8 @@ safe_remove() {
 
 git_commit() {
   local sha
-  if sha="$(git -C "$REPO_ROOT" rev-parse --verify HEAD 2>/dev/null)"; then
+  if sha="$(git -c safe.directory="$REPO_ROOT" -C "$REPO_ROOT" \
+       rev-parse --verify HEAD 2>/dev/null)"; then
     printf '%s\n' "$sha"
   else
     printf 'unknown\n'
@@ -150,8 +151,10 @@ git_commit() {
 }
 
 git_dirty() {
-  if git -C "$REPO_ROOT" rev-parse --git-dir >/dev/null 2>&1; then
-    if [[ -n "$(git -C "$REPO_ROOT" status --porcelain 2>/dev/null)" ]]; then
+  if git -c safe.directory="$REPO_ROOT" -C "$REPO_ROOT" \
+       rev-parse --git-dir >/dev/null 2>&1; then
+    if [[ -n "$(git -c safe.directory="$REPO_ROOT" -C "$REPO_ROOT" \
+         status --porcelain 2>/dev/null)" ]]; then
       printf 'true\n'
     else
       printf 'false\n'

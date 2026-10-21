@@ -6,7 +6,7 @@ set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/../scripts/lib.sh"
 
 load_versions
-require_cmd dpkg-deb awk grep
+require_cmd dpkg-deb awk grep tar
 
 if [[ $# -eq 0 ]]; then
   shopt -s nullglob
@@ -48,8 +48,13 @@ if [[ ! "${pkg_size:-0}" =~ ^[0-9]+$ ]] || (( pkg_size <= 0 )); then
 fi
 
 contents="$(mktemp)"
-trap 'rm -f "$contents"' EXIT
+members="$(mktemp)"
+trap 'rm -f "$contents" "$members"' EXIT
 dpkg-deb --contents "$main_deb" > "$contents"
+if ! dpkg-deb --fsys-tarfile "$main_deb" | tar -tf - > "$members"; then
+  die "could not list the package filesystem"
+fi
+[[ -s "$members" ]] || die "package filesystem listing is empty"
 
 for required in ./usr/bin/kicad ./usr/bin/kicad-cli ./usr/share/man/man1/kicad.1.gz; do
   grep -qF " $required" "$contents" ||
@@ -58,7 +63,26 @@ done
 grep -Eq ' \./usr/share/applications/[^ ]+\.desktop$' "$contents" ||
   die "missing desktop file under /usr/share/applications"
 
-if grep -Eq '/\.\.(/|$)' "$contents"; then
+# Check tar member names, not dpkg-deb --contents lines: the latter include
+# symlink targets such as "../../lib/..." which are legitimate.
+if awk '
+  {
+    if ($0 !~ /^\.\//) {
+      printf "non-relative package path: %s\n", $0 > "/dev/stderr"
+      bad = 1
+      next
+    }
+    n = split($0, part, "/")
+    for (i = 1; i <= n; i++) {
+      if (part[i] == "..") {
+        printf "path traversal: %s\n", $0 > "/dev/stderr"
+        bad = 1
+        break
+      }
+    }
+  }
+  END { exit(bad ? 0 : 1) }
+' "$members"; then
   die "package contains an unsafe path traversal entry"
 fi
 
