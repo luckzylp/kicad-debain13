@@ -152,6 +152,7 @@ sudo chown -R "$(id -u):$(id -g)" build dist .cache
 | `test-package.sh` | `dpkg-deb` 结构、文件布局、setuid、世界可写检查 | 否 |
 | `audit-package.sh` | Lintian，错误阻断；警告记录待审 | 否 |
 | `make-checksums.sh` | 对 `dist/` 中所有发布资产生成 `SHA256SUMS` | 否 |
+| `publish-release.sh` | 创建 draft Release、上传资产、转为正式 Release | 否 |
 | `make-build-info.py` | 生成 `build-info.json` | 否 |
 | `make-release-notes.sh` | 生成 Release 说明 | 否 |
 | `validate-manifest.sh` | 版本/发行版/tag/校验和清单一致性 | 否 |

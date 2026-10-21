@@ -107,29 +107,4 @@ jobs:
           ( cd dist && sha256sum -c SHA256SUMS )
 
       - name: Create and publish GitHub Release
-        run: |
-          set -euo pipefail
-          # shellcheck disable=SC1091
-          source packaging/versions.env
-          version="$(dpkg-parsechangelog -l debian/changelog -S Version)"
-          assets=(
-            dist/*.deb
-            dist/*.buildinfo
-            dist/*.changes
-            dist/SHA256SUMS
-            dist/build-info.json
-            dist/RELEASE-NOTES.md
-            dist/reports/*
-          )
-
-          # Create a draft first.  If an upload fails, the release is not
-          # visible as a published release with a partial asset set.
-          gh release create "$GITHUB_REF_NAME" \
-            --draft \
-            --verify-tag \
-            --title "KiCad ${UPSTREAM_VERSION} for Debian 13 (${ARCHITECTURE})" \
-            --notes-file dist/RELEASE-NOTES.md
-
-          gh release upload "$GITHUB_REF_NAME" "${assets[@]}" --clobber
-          gh release edit "$GITHUB_REF_NAME" --draft=false --latest
-          printf 'published %s for %s\n' "$GITHUB_REF_NAME" "$version"
+        run: ./scripts/publish-release.sh
