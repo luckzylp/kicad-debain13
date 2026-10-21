@@ -151,7 +151,7 @@ make smoke   # 一次性容器/VM
 3. 生成 Release notes；
 4. 重新生成 `SHA256SUMS`，覆盖 `.deb`、`build-info.json`、Release notes 和报告；
 5. 用 `sha256sum -c` 验证；
-6. 通过 `gh release create` 发布。
+6. 创建 draft，上传资产后转为正式 Release。
 
 `SHA256SUMS` 只能发现下载损坏或意外修改，**不能证明发布者身份**。如果用户需要确认
 来源真实性，应通过独立可信渠道获取校验和，或自行构建。
@@ -182,12 +182,15 @@ Release 不签名，但 `fetch-source.sh` 仍然验证 Debian 官方 `.dsc` 的�
    ```
 
 5. `Release` workflow 依次执行：标签校验 → 构建 → 干净容器安装测试 → 人工审批 →
-   重新生成并验证 `SHA256SUMS` → `gh release create`。
+   重新生成并验证 `SHA256SUMS` → 创建 draft Release → 上传资产 → 发布。
 6. 在 GitHub Release 页面再次核对：
    - 版本、架构、标签；
    - `.deb`、`SHA256SUMS`、`build-info.json`；
    - Release notes 中的安装/验证命令。
 7. 在一台干净的 Debian 13 机器上按 Release notes 完整验证一次。
+
+如果发布在创建 draft 后、上传资产前失败，draft 不会出现在公开 Release 列表中。
+删除该 draft 后重新运行即可；不要把半成品 draft 直接发布。
 
 ## 8. 用户验证
 

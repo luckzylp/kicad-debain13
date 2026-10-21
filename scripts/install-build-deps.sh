@@ -17,10 +17,18 @@ log "installing Build-Depends from Debian 13 (trixie)"
 apt_get build-dep -y --no-install-recommends "$SOURCE_DIR" \
   2>&1 | tee "${LOG_DIR}/build-deps-install.log"
 
+checkbuilddeps_report="${REPORT_DIR}/dpkg-checkbuilddeps.txt"
 (
   cd "$SOURCE_DIR"
   dpkg-checkbuilddeps
-) 2>&1 | tee "${REPORT_DIR}/dpkg-checkbuilddeps.txt"
+) 2>&1 | tee "$checkbuilddeps_report"
+
+# GitHub release uploads reject zero-byte assets.  dpkg-checkbuilddeps prints
+# nothing on success, so record an explicit success line.
+if [[ ! -s "$checkbuilddeps_report" ]]; then
+  printf 'dpkg-checkbuilddeps: success (no missing build dependencies)\n' \
+    > "$checkbuilddeps_report"
+fi
 
 # GitHub-hosted runners have only ~14 GiB free.  Reclaim the apt package cache
 # before the compilation starts.

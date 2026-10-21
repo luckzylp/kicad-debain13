@@ -90,6 +90,13 @@ jobs:
           mkdir -p dist/reports
           cp -v smoke-reports/smoke-test.txt dist/reports/
 
+      - name: Ensure report assets are non-empty
+        run: |
+          set -euo pipefail
+          while IFS= read -r -d '' file; do
+            printf 'empty report: no output\n' > "$file"
+          done < <(find dist/reports -type f -empty -print0)
+
       - name: Generate release notes
         run: ./scripts/make-release-notes.sh
 
@@ -99,22 +106,30 @@ jobs:
           ./scripts/make-checksums.sh
           ( cd dist && sha256sum -c SHA256SUMS )
 
-      - name: Create GitHub Release
+      - name: Create and publish GitHub Release
         run: |
           set -euo pipefail
           # shellcheck disable=SC1091
           source packaging/versions.env
           version="$(dpkg-parsechangelog -l debian/changelog -S Version)"
-          gh release create "$GITHUB_REF_NAME" \
-            --verify-tag \
-            --latest \
-            --title "KiCad ${UPSTREAM_VERSION} for Debian 13 (${ARCHITECTURE})" \
-            --notes-file dist/RELEASE-NOTES.md \
-            dist/*.deb \
-            dist/*.buildinfo \
-            dist/*.changes \
-            dist/SHA256SUMS \
-            dist/build-info.json \
-            dist/RELEASE-NOTES.md \
+          assets=(
+            dist/*.deb
+            dist/*.buildinfo
+            dist/*.changes
+            dist/SHA256SUMS
+            dist/build-info.json
+            dist/RELEASE-NOTES.md
             dist/reports/*
+          )
+
+          # Create a draft first.  If an upload fails, the release is not
+          # visible as a published release with a partial asset set.
+          gh release create "$GITHUB_REF_NAME" \
+            --draft \
+            --verify-tag \
+            --title "KiCad ${UPSTREAM_VERSION} for Debian 13 (${ARCHITECTURE})" \
+            --notes-file dist/RELEASE-NOTES.md
+
+          gh release upload "$GITHUB_REF_NAME" "${assets[@]}" --clobber
+          gh release edit "$GITHUB_REF_NAME" --draft=false --latest
           printf 'published %s for %s\n' "$GITHUB_REF_NAME" "$version"
